@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assessment · Implementación de redes</title>
+<style>
+:root{color-scheme:light;--ink:#14283e;--muted:#52677c;--line:#d9e2ec;--blue:#145aca;--bg:#f2f5f9;--surface:#fff}*{box-sizing:border-box}body{margin:0;font:16px/1.55 "Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #ec9c19;outline-offset:3px}header{background:#102b48;color:white;padding:26px max(24px,calc((100vw - 1380px)/2));border-bottom:5px solid #32c8bd}.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;color:#7ce6dd;text-transform:uppercase}h1{font-size:clamp(24px,3vw,34px);margin:5px 0}header p{margin:4px 0;color:#d4e1ef}main{max-width:1428px;padding:24px;margin:auto}.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:20px}.identity{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.identity label{font-size:14px;font-weight:600}.identity input{width:100%;display:block;border:1px solid #aab9ca;border-radius:6px;padding:9px 10px;margin-top:5px;color:var(--ink);background:white}.scale{margin:18px 0}.scale summary{cursor:pointer;font-weight:700}.scale-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:15px 0 6px}.scale-grid div{background:#f2f6fb;border-radius:8px;padding:12px;font-size:14px}.scale-grid strong{display:block;color:#174b90;margin-bottom:5px}.muted{color:var(--muted);font-size:14px}.summary{display:grid;grid-template-columns:1.25fr repeat(3,1fr);gap:14px;margin:18px 0}.metric{padding:17px 20px;background:white;border:1px solid var(--line);border-radius:10px}.metric .number{font-size:29px;font-weight:700;line-height:1.35}.metric .label{font-size:14px;color:var(--muted)}progress{display:block;width:100%;height:9px;margin:9px 0 5px;accent-color:var(--blue)}.workspace{display:grid;grid-template-columns:305px minmax(0,1fr);gap:20px;align-items:start}.sidebar{padding:12px;background:white;border:1px solid var(--line);border-radius:12px}.sidebar h2{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:8px 10px 14px}.nav-button{width:100%;border:0;background:none;display:flex;align-items:center;gap:10px;text-align:left;border-radius:7px;color:var(--ink);padding:10px;font-size:14px;line-height:1.3}.nav-button:hover{background:#eef4fc}.nav-button[aria-current="step"]{background:#e8f1ff;color:#114b9e;font-weight:700;box-shadow:inset 3px 0 var(--blue)}.nav-number{font-size:12px;color:var(--muted);min-width:19px}.nav-label{flex:1}.count{white-space:nowrap;border-radius:4px;background:#edf1f6;padding:3px 5px;font-size:12px}.count.done{background:#d5f2e6;color:#116140}.process{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden}.process-head{padding:22px 24px;border-bottom:1px solid var(--line);background:#fbfcfe}.process-head h2{margin:4px 0 6px;font-size:25px;line-height:1.25}.step{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.04em}.question{margin:0;padding:22px 24px;border:0;border-bottom:1px solid var(--line);min-width:0}.question legend{float:left;width:100%;font-weight:700;margin-bottom:10px}.question-body{clear:both}.badge{display:inline-block;padding:3px 10px;border-radius:5px;font-size:13px;letter-spacing:.02em}.badge-0{color:#14569d;background:#e9f2ff}.badge-1{color:#75451a;background:#fff0d9}.badge-2{color:#663394;background:#f3eaff}.statement{margin:0 0 16px;max-width:850px}.rating-bar{display:flex;align-items:center;gap:15px;flex-wrap:wrap}.ratings{display:flex;gap:9px}.rating{position:relative}.rating input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}.rating span{width:51px;height:45px;display:grid;place-items:center;border:1px solid #aebed1;border-radius:7px;background:white;font-size:18px;font-weight:600;transition:background .12s}.rating input:checked+span{color:white;background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 2px #c4d9ff}.rating input:focus-visible+span{outline:3px solid #ec9c19;outline-offset:3px}.rating:hover span{border-color:var(--blue)}.answer-label{font-size:14px;color:var(--muted);min-width:155px}.clear{border:0;background:none;color:#345d8b;text-decoration:underline;font-size:14px;padding:8px}.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px;background:#fbfcfe}.btn{border:1px solid #aebed1;padding:10px 16px;border-radius:7px;background:white;color:var(--ink);font-weight:600;font-size:14px}.btn:hover{background:#eef4fc}.btn.primary{background:var(--blue);color:white;border-color:var(--blue)}.btn:disabled{opacity:.45;cursor:default}.footer{margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.save-note{margin:12px 0;font-size:14px;color:var(--muted)}.save-note.error{color:#a32929}.results{margin-top:20px}.results h2{margin:0 0 5px;font-size:22px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line)}th{background:#f1f5fa}td:not(:first-child),th:not(:first-child){text-align:center}caption{text-align:left;color:var(--muted);margin-bottom:10px}#notice{font-size:14px;color:#175c43;min-height:22px}#print-items{display:none}[hidden]{display:none!important}noscript{display:block;padding:25px;background:#fff0d9}
+/* Paleta visual de Template_Presentacion_Cliente.pptx:
+   fondos azul marino, acentos #42E8B4 / #5EECC0 y texto blanco.
+   Se aplica solo en pantalla para conservar la impresión sobre fondo blanco. */
+@media screen{
+ :root{color-scheme:dark;--ink:#f4f8ff;--muted:#b5c9df;--line:#294762;--blue:#42e8b4;--bg:#051326;--surface:#0b213b;--mint:#42e8b4;--mint-light:#5eecc0}
+ body{background:radial-gradient(ellipse at 0 0,#0b3560 0,transparent 48%),var(--bg);background-attachment:fixed}
+ header{background:linear-gradient(110deg,#0b3560 0%,#071c36 62%,#030e20 100%);border-bottom-color:var(--mint)}
+ h1{color:var(--mint-light)}
+ .eyebrow{color:#ffffff}
+ header p{color:#d4e1ef}
+ .panel,.metric,.sidebar,.process{background:var(--surface);border-color:var(--line)}
+ .identity input{background:#07192e;border-color:#58738e;color:var(--ink)}
+ .identity input::placeholder{color:#a8bed5;opacity:1}
+ .scale summary,.results h2,.process-head h2{color:var(--mint-light)}
+ .scale-grid div{background:#102d48}
+ .scale-grid strong{color:var(--mint-light)}
+ .metric{border-top:3px solid #2c6486}
+ .metric:first-child{border-top-color:var(--mint)}
+ .metric .number{color:var(--mint-light)}
+ progress{background:#1b3b57;border-radius:9px;overflow:hidden}
+ progress::-webkit-progress-bar{background:#1b3b57}
+ progress::-webkit-progress-value{background:var(--mint);border-radius:9px}
+ progress::-moz-progress-bar{background:var(--mint);border-radius:9px}
+ .sidebar h2{color:var(--mint-light)}
+ .nav-button:hover{background:#15344f}
+ .nav-button[aria-current="step"]{background:#103d43;color:#89f6d3;box-shadow:inset 3px 0 var(--mint)}
+ .count{background:#183750;color:#d4e1ef}
+ .count.done{background:#12483f;color:#89f6d3}
+ .process-head,.pager{background:#0e2945}
+ .badge-0{background:#14394f;color:#a0dfef}
+ .badge-1{background:#114147;color:#8af2dc}
+ .badge-2{background:#174739;color:#92f3c3}
+ .rating span{background:#07192e;border-color:#58738e;color:var(--ink)}
+ .rating input:checked+span{background:var(--mint);color:#052337;border-color:var(--mint);box-shadow:0 0 0 2px #1a625b}
+ .rating:hover span{background:#123b4b;border-color:var(--mint)}
+ .rating:hover input:checked+span{background:var(--mint)}
+ .clear{color:var(--mint-light)}
+ .btn{background:#102d48;border-color:#58738e;color:var(--ink)}
+ .btn:hover{background:#19405b;border-color:#71c6bc}
+ .btn.primary{background:var(--mint);border-color:var(--mint);color:#052337}
+ .btn.primary:hover{background:#80f1cc;border-color:#80f1cc}
+ th{background:#102d48}
+ thead th{color:var(--mint-light)}
+ tbody tr:hover td,tbody tr:hover th{background:#14344d}
+ #notice{color:#89f6d3}
+ .save-note.error{color:#ffb3b3}
+ noscript{background:#173b4e;color:white}
+ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,.rating input:focus-visible+span{outline-color:#ffffff}
+}
+@media(max-width:1050px){.workspace{grid-template-columns:240px minmax(0,1fr)}.identity{grid-template-columns:repeat(2,1fr)}.scale-grid{grid-template-columns:repeat(3,1fr)}.summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){main{padding:14px}header{padding:22px 18px}.workspace{grid-template-columns:1fr}.sidebar{max-height:225px;overflow:auto}.identity{grid-template-columns:1fr 1fr;gap:10px}.panel{padding:15px}.scale-grid{grid-template-columns:1fr}.summary{gap:9px}.metric{padding:12px}.metric .number{font-size:25px}.process-head,.question{padding:18px}.pager{padding:16px}.ratings{gap:7px}.rating span{width:44px}.answer-label{min-width:0}.footer .btn{flex:1}.identity input{min-width:0}.nav-button{padding:9px}.statement{font-size:16px}}
+@media print{body{background:white;font-size:11px}header{background:white;color:#14283e;padding:10px 0;border-bottom:2px solid #14283e}header p,.eyebrow{color:#52677c}h1{font-size:22px}main{padding:10px 0}.panel,.metric{border-radius:0;padding:10px}.identity{grid-template-columns:repeat(4,1fr)}.identity input{border:0;padding:0;font-size:12px}.scale,.workspace,.footer,.save-note,#notice{display:none}.summary{grid-template-columns:repeat(4,1fr)}.metric .number{font-size:20px}.results{margin-top:10px}.results h2{font-size:17px}table{font-size:10px}th,td{padding:5px}tr{break-inside:avoid}#print-items{display:block;page-break-before:always}.print-process{break-inside:avoid;border-bottom:1px solid #ccc;margin-bottom:12px}.print-process h3{font-size:14px;margin:10px 0 5px}.print-process p{margin:5px 0}.print-process strong{color:#14283e}button{display:none}}
+.person-field{min-width:0}.person-field>label{display:block}.identity select{width:100%;display:block;border:1px solid #aab9ca;border-radius:6px;padding:9px 10px;margin-top:5px;min-width:0;color:var(--ink);background:white}.people-editor{margin-top:8px;font-size:14px}.people-editor summary{cursor:pointer;color:var(--muted)}.people-editor label{display:block;margin-top:8px}.people-editor .btn{margin-top:8px}.people-message{font-size:14px;color:var(--muted);margin:6px 0 0}.people-count{display:block;font-size:13px;color:var(--muted);margin-top:5px}.people-editor input{font-size:14px}
+@media screen{.identity select{background:#07192e;border-color:#58738e;color:var(--ink)}select:focus-visible{outline:3px solid white;outline-offset:3px}}
+@media print{.people-editor,.people-count,.people-message{display:none}.identity select{appearance:none;border:0;background:white;color:#14283e;padding:0;font-size:12px}}
+.admin-toolbar{display:flex;justify-content:flex-end;margin-bottom:16px}.admin-dialog{width:min(950px,94vw);max-height:90vh;border:1px solid var(--line);border-radius:12px;padding:24px;background:var(--surface);color:var(--ink)}.admin-dialog::backdrop{background:#020b19cc}.admin-dialog h2{margin:0;color:var(--blue)}.admin-dialog label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}.admin-dialog input,.admin-dialog select,.admin-dialog textarea{width:100%;font:inherit;border:1px solid #58738e;border-radius:6px;padding:10px;background:var(--bg);color:var(--ink)}.admin-dialog textarea{min-height:105px;resize:vertical}.admin-top,.admin-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:16px 0}.admin-top>div{flex:1;min-width:180px}.admin-question{border:1px solid var(--line);border-radius:8px;padding:16px;margin-top:14px}.admin-question-head{display:flex;gap:12px;align-items:end;margin-bottom:12px}.admin-question-head>div{flex:1}.admin-actions{justify-content:space-between}.danger{color:#ffb3b3;border-color:#a35762}.admin-error{color:#ffb3b3;min-height:24px}.admin-help{font-size:14px;color:var(--muted)}.admin-dialog button:focus-visible,.admin-dialog input:focus-visible,.admin-dialog textarea:focus-visible,.admin-dialog select:focus-visible{outline:3px solid white;outline-offset:3px}@media print{.admin-toolbar,.admin-dialog{display:none}}
+.dimension-group{border-bottom:1px solid var(--line);padding:5px 0}.dimension-group:last-child{border-bottom:0}.dimension-group>summary{cursor:pointer;padding:13px 10px;border-radius:7px;list-style:none;position:relative;padding-right:27px}.dimension-group>summary::-webkit-details-marker{display:none}.dimension-group>summary:after{content:'+';position:absolute;right:10px;top:15px;font-size:20px;color:var(--muted)}.dimension-group[open]>summary:after{content:'−'}.dimension-name{display:block;font-weight:700;font-size:16px}.dimension-progress{display:block;font-size:13px;color:var(--muted);margin-top:5px}.dimension-group.has-current>summary{color:var(--blue)}.dimension-group>summary:hover{background:#15344f}.dimension-processes{padding:4px 0 12px 12px}.dimension-processes .nav-button{font-size:14px}.dimension-result th{background:#174739;color:#92f3c3;text-align:left!important;padding-top:16px}.question-mover{display:flex;flex-wrap:wrap;gap:12px;align-items:end;border-top:1px solid var(--line);margin-top:14px;padding-top:14px}.question-mover>div{flex:1;min-width:180px}.question-mover .btn{margin-bottom:1px}@media(max-width:720px){.sidebar{max-height:none}.question-mover{display:block}.question-mover>div{margin-bottom:12px}}@media print{.dimension-result th{background:#edf1f6;color:#14283e}}
+.admin-toolbar{gap:12px;flex-wrap:wrap}.scale-editor-row{border:1px solid var(--line);border-radius:8px;padding:16px;margin:18px 0}.scale-editor-row legend{font-weight:700;color:var(--blue);padding:0 6px}.scale-editor-row textarea{min-height:85px}.scale-editor-row input{margin-bottom:12px}.scale-grid{overflow-wrap:anywhere}.answer-label{overflow-wrap:anywhere}.scale-grid span{white-space:pre-wrap}@media(max-width:720px){.admin-toolbar .btn{flex:1}}
+.weight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.weight-grid input{margin-top:6px}.weight-total{color:#89f6d3;font-size:14px;font-weight:600}.weight-total.invalid{color:#ffb3b3}.weight-section{border-bottom:1px solid var(--line);padding:12px 0}.weighted-card{display:grid;grid-template-columns:230px 1fr;gap:24px;border-left:4px solid var(--blue);margin:0 0 20px}.weighted-card h2{font-size:18px;margin:0 0 8px}.weighted-number{font-size:36px;font-weight:700;color:var(--blue)}.result-status{display:inline-block;border:1px solid #b19353;border-radius:5px;padding:3px 9px;color:#f5d498;font-size:14px}.result-status.complete{color:#89f6d3;border-color:#3e9b80}.weighted-card p{margin:8px 0}.dimension-scores th:first-child{text-align:left}.dimension-scores td{white-space:nowrap}.dimension-scores{margin-top:20px}.dimension-scores h2{margin-top:0}.weight-formula{font-size:14px;color:var(--muted)}@media(max-width:720px){.weight-grid{grid-template-columns:1fr 1fr}.weighted-card{grid-template-columns:1fr;gap:6px}}@media print{.weighted-card{grid-template-columns:180px 1fr;break-inside:avoid;padding:10px}.weighted-number{color:#14283e}.result-status,.result-status.complete{color:#14283e;border-color:#52677c}.dimension-scores{break-inside:avoid}.dimension-scores th,.dimension-scores td{padding:5px}}
+.process-move-panel{border:1px solid var(--line);border-left:3px solid var(--blue);padding:16px;border-radius:8px;margin:16px 0}.process-move-panel h3{margin:0 0 8px}.process-move-controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.process-move-controls>div{flex:1;min-width:180px}.process-move-controls .btn{margin-bottom:1px}#process-move-status{color:var(--blue);font-size:14px}.individual-move{margin-top:14px;color:var(--muted);font-size:14px}.individual-move>summary{cursor:pointer}.individual-move .question-mover{font-size:16px;color:var(--ink)}
+.weighted-card{grid-template-columns:minmax(190px,1fr) minmax(190px,1fr)}.weighted-details{grid-column:1/-1}.compliance-metric{border-left:1px solid var(--line);padding-left:24px}@media(min-width:1400px){.weighted-card{grid-template-columns:230px 230px 1fr}.weighted-details{grid-column:auto}}@media(max-width:550px){.weighted-card{grid-template-columns:1fr}.compliance-metric{border-left:0;border-top:1px solid var(--line);padding:16px 0 0}}@media print{.weighted-card{grid-template-columns:1fr 1fr}.weighted-details{grid-column:1/-1}.dimension-scores table{font-size:10px}}
+
+.weighted-card{grid-template-columns:minmax(160px,1fr) minmax(170px,1fr) minmax(330px,2.5fr);align-items:start}.weighted-details{grid-column:1/-1}.compliance-chart-panel{min-width:0;border-left:1px solid var(--line);padding-left:24px}.compliance-chart-legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--muted)}.compliance-chart-legend span{display:inline-flex;align-items:center;gap:6px}.compliance-chart-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}.legend-reached,.compliance-fill{background:#42e8b4}.legend-gap{background:#5b5040;border:1px solid #c6a267}.compliance-chart{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:17px}.compliance-row-heading,.compliance-row-details{display:flex;justify-content:space-between;gap:6px 12px;flex-wrap:wrap}.compliance-row-heading{font-size:13px;margin-bottom:6px}.compliance-gap{color:#f5d498;font-size:12px}.compliance-track{height:12px;overflow:hidden;border-radius:4px;background:repeating-linear-gradient(135deg,#5b5040 0px,#5b5040 5px,#443d34 5px,#443d34 10px);border:1px solid #857051}.compliance-fill{height:100%;display:block}.compliance-track.is-pending{background:transparent;border:1px dashed var(--muted)}.compliance-row-details{font-size:11px;color:var(--muted);margin-top:5px}.compliance-chart-note{font-size:11px;color:var(--muted);line-height:1.5}.compliance-chart-panel h2{line-height:1.3}
+@media(max-width:1100px){.weighted-card{grid-template-columns:1fr 1fr}.compliance-chart-panel{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:18px 0 0}}@media(max-width:550px){.weighted-card{grid-template-columns:1fr}}
+@media print{.weighted-card{grid-template-columns:1fr 1fr}.compliance-chart-panel{grid-column:1/-1;border-left:0;padding:12px 0 0;break-inside:avoid}.compliance-chart{gap:9px}.compliance-gap{color:#604618}.compliance-track,.compliance-fill,.compliance-chart-legend i{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Modelo de contribución · Assesment</div><h1>Implementación de soluciones de redes</h1><p>5 dimensiones · 33 procesos · 99 ítems para evaluar de 1 a 5</p></header>
+<noscript>Activa JavaScript en el navegador para completar la encuesta.</noscript>
+<main>
+<div class="admin-toolbar"><button class="btn" id="manage-questions" type="button">Administrar preguntas</button><button class="btn" id="manage-scale" type="button">Administrar escala</button><button class="btn primary" id="save-design-html" type="button">Guardar formulario en HTML</button></div>
+<p class="muted" id="design-file-status" role="status">Los cambios del administrador pueden guardarse dentro de este HTML. Elige este mismo archivo para reemplazarlo. Las respuestas de los colaboradores permanecen locales y se respaldan por separado.</p>
+<dialog class="admin-dialog" id="scale-dialog" aria-labelledby="scale-title"><h2 id="scale-title">Administrar escala, ponderaciones y notas objetivo</h2><p class="admin-help">Estos ajustes se aplican a todos los colaboradores. Cambiar los porcentajes recalcula sus resultados sin modificar las notas del 1 al 5.</p><section class="weight-section"><h3>Peso de las complejidades</h3><p class="admin-help">Se aplica a los promedios dentro de cada dimensión.</p><div class="weight-grid" id="weights-complexity"></div><p class="weight-total" id="weights-complexity-total" role="status"></p></section><section class="weight-section"><h3>Peso de las dimensiones</h3><div class="weight-grid" id="weights-dimensions"></div><p class="weight-total" id="weights-dimensions-total" role="status"></p><button class="btn" type="button" id="weights-defaults">Restablecer ponderaciones iniciales</button><p class="admin-help">Cada grupo debe sumar 100%. Un peso de 0% excluye esa categoría del cálculo, pero sus preguntas siguen contando para el avance.</p></section><section class="weight-section"><h3>Nota objetivo por dimensión</h3><p class="admin-help">Define la meta de cada dimensión, entre 1 y 5. El cumplimiento compara la nota ponderada obtenida con esta meta; cambiarla recalcula el porcentaje y conserva las evaluaciones.</p><div class="weight-grid" id="targets-fields"></div><p class="weight-total" id="targets-status" role="status"></p><button class="btn" type="button" id="targets-defaults">Restablecer notas objetivo iniciales</button></section><h3>Niveles de desempeño</h3><p class="admin-help">Personaliza los nombres y las descripciones. Los textos actualizados también describirán las notas existentes.</p><div id="scale-fields"></div><p id="scale-error" class="admin-error" role="status"></p><div class="admin-actions"><button class="btn" id="scale-defaults" type="button">Restablecer escala original</button><button class="btn" id="scale-cancel" type="button">Cancelar</button><button class="btn primary" id="scale-save" type="button">Guardar en HTML</button></div></dialog>
+<dialog class="admin-dialog" id="admin-dialog" aria-labelledby="admin-title"><h2 id="admin-title">Administrar preguntas</h2><p class="admin-help">Edita los textos, agrega preguntas o elimina las que no necesites. Puedes tener varias preguntas por complejidad. Las preguntas son comunes a todos los colaboradores. Puedes cambiar la dimensión de un proceso completo o mover una pregunta a otro proceso. Pulsa «Guardar en HTML» y selecciona este mismo archivo para que los cambios queden incorporados permanentemente. El HTML actualizado aplicará el diseño también en otros computadores.</p><div class="admin-top"><div><label for="admin-process">Proceso</label><select id="admin-process"></select></div><button class="btn" id="admin-add-process" type="button">Agregar proceso</button></div><section class="process-move-panel"><h3>Mover proceso completo</h3><p class="admin-help" id="admin-current-dimension"></p><div class="process-move-controls"><div><label for="admin-dimension">Dimensión de destino</label><select id="admin-dimension"></select></div><button class="btn primary" id="admin-move-process" type="button">Mover proceso completo</button></div><p class="admin-help">Se trasladan juntas todas las preguntas del proceso, incluidas las complejidades moderada, alta y muy alta. Se conservan las notas de los colaboradores.</p><p id="process-move-status" role="status"></p></section><label for="admin-process-title">Nombre del proceso</label><input id="admin-process-title" maxlength="200"><div id="admin-question-list"></div><div class="admin-actions"><button class="btn" id="admin-add-question" type="button">Agregar pregunta</button><button class="btn danger" id="admin-delete-process" type="button">Eliminar proceso</button></div><p class="admin-help">Si editas el texto o la complejidad de una pregunta respondida, sus notas quedarán pendientes en las evaluaciones de todos los colaboradores para volver a evaluarla. Las preguntas eliminadas dejan de contar; las demás conservan sus notas. Mover preguntas o procesos entre dimensiones conserva sus notas. Las copias de respaldo incluyen la organización por dimensiones.</p><div class="admin-error" id="admin-error" role="status"></div><div class="admin-actions"><button class="btn" id="admin-cancel" type="button">Cancelar</button><button class="btn primary" id="admin-save" type="button">Guardar en HTML</button></div></dialog>
+<section class="panel identity" aria-label="Datos de la evaluación">
+<div class="person-field"><label for="engineer">Colaborador</label><select id="engineer" aria-describedby="engineer-count"><option value="">Selecciona un colaborador</option></select><span class="people-count" id="engineer-count"></span><details class="people-editor" id="engineer-editor"><summary>Agregar colaborador</summary><label for="engineer-new">Nombre y apellido</label><input id="engineer-new" autocomplete="off" maxlength="160" placeholder="Nombre del colaborador"><button class="btn" type="button" id="engineer-add">Agregar a la lista</button></details><p class="people-message" id="engineer-message" role="status"></p></div>
+<div class="person-field"><label for="evaluator">Evaluador</label><select id="evaluator" aria-describedby="evaluator-count"><option value="">Selecciona un evaluador</option></select><span class="people-count" id="evaluator-count"></span><details class="people-editor" id="evaluator-editor"><summary>Agregar evaluador</summary><label for="evaluator-new">Nombre y apellido</label><input id="evaluator-new" autocomplete="off" maxlength="160" placeholder="Nombre del evaluador"><button class="btn" type="button" id="evaluator-add">Agregar a la lista</button></details><p class="people-message" id="evaluator-message" role="status"></p></div>
+<label>Assesment<input id="project" placeholder="Nombre del assesment" maxlength="200"></label>
+<label>Fecha<input id="date" type="date"></label>
+</section>
+<details class="panel scale" open><summary>Escala de evaluación · ¿Qué significa cada nota?</summary><div class="scale-grid">
+<div><strong>1 · Inicial</strong>No demuestra el criterio; requiere guía paso a paso.</div>
+<div><strong>2 · En desarrollo</strong>Lo realiza parcialmente y necesita apoyo frecuente.</div>
+<div><strong>3 · Competente</strong>Cumple el criterio con apoyo puntual.</div>
+<div><strong>4 · Autónomo</strong>Cumple el criterio sin apoyo y justifica sus decisiones.</div>
+<div><strong>5 · Referente</strong>Cumple con autonomía, anticipa problemas y puede orientar a otros.</div>
+</div><p class="muted">Evalúa con evidencia del proyecto, entrevista o laboratorio. Deja pendiente lo que no hayas evaluado: una nota 1 representa un desempeño observado. La complejidad del escenario y la nota son independientes.</p></details>
+<p id="evaluation-owner" role="status" style="font-weight:700;font-size:20px;margin-bottom:0">Borrador sin colaborador</p>
+<p class="muted" style="margin-top:4px">Al cambiar de colaborador se guarda la evaluación actual y se carga la de la persona seleccionada.</p>
+<section class="summary" aria-label="Resumen de evaluación">
+<div class="metric"><div class="label">Avance de la evaluación</div><div class="number" id="progress-text">0 / 99</div><progress id="progress" max="99" value="0" aria-label="Ítems evaluados"></progress><div class="label" id="pending">99 pendientes</div></div>
+<div class="metric"><div class="label">Complejidad moderada</div><div class="number" id="avg-0">—</div><div class="label" id="answered-0">0 de 33 evaluados</div></div>
+<div class="metric"><div class="label">Complejidad alta</div><div class="number" id="avg-1">—</div><div class="label" id="answered-1">0 de 33 evaluados</div></div>
+<div class="metric"><div class="label">Complejidad muy alta</div><div class="number" id="avg-2">—</div><div class="label" id="answered-2">0 de 33 evaluados</div></div>
+</section>
+<section class="panel weighted-card" aria-label="Resultado ponderado"><div><h2>Resultado ponderado</h2><div class="weighted-number" id="weighted-score">—</div><span class="result-status" id="weighted-status">Sin evaluar</span></div><div class="compliance-metric"><h2>Aporte cumplimiento</h2><div class="weighted-number" id="compliance-score">—</div><span class="result-status" id="compliance-status">Sin evaluar</span></div><section class="compliance-chart-panel" aria-labelledby="compliance-chart-title"><h2 id="compliance-chart-title">Cumplimiento y brecha por dimensión</h2><p class="compliance-chart-legend"><span><i class="legend-reached" aria-hidden="true"></i>Alcanzado</span><span><i class="legend-gap" aria-hidden="true"></i>Brecha</span><span>Meta: peso de cada dimensión</span></p><ul id="compliance-chart" class="compliance-chart"></ul><p class="compliance-chart-note">Cada barra completa representa el peso de su dimensión. Brecha = peso − aporte al total (mínimo 0%). Ejemplo: peso 20% y aporte 15% → brecha 5%. Las diferencias se expresan en puntos porcentuales. Si el aporte supera el peso, se indica el excedente.</p></section><div class="weighted-details"><strong id="weighted-progress">0% de avance</strong><p class="muted" id="weighted-explanation"></p><p class="weight-formula" id="weight-formula"></p><p class="weight-formula" id="compliance-formula"></p><p class="muted">Los tres promedios superiores muestran el desempeño observado por complejidad, sin ponderar por dimensión.</p></div></section>
+<div class="workspace"><nav class="sidebar" aria-label="Dimensiones de evaluación"><h2>Dimensiones</h2><div id="navigation"></div></nav><section class="process" aria-labelledby="process-title"><div class="process-head"><div class="step" id="step"></div><h2 id="process-title" tabindex="-1"></h2><div class="muted">¿En qué medida la persona demuestra cada criterio?</div></div><div id="questions"></div><div class="pager"><button class="btn" id="previous" type="button">← Anterior</button><span class="muted" id="page-status"></span><button class="btn primary" id="next" type="button">Siguiente →</button></div></section></div>
+<section class="panel dimension-scores"><h2>Resultado por dimensión</h2><p class="muted">Cada dimensión combina los promedios de complejidad según sus porcentajes. El resultado final combina las cinco notas según el peso de cada dimensión. Las preguntas pendientes no cuentan como cero. Cumplimiento = nota ponderada ÷ nota objetivo × 100.</p><div class="table-wrap"><table><thead><tr><th scope="col">Dimensión</th><th scope="col">Peso</th><th scope="col">Moderada</th><th scope="col">Alta</th><th scope="col">Muy alta</th><th scope="col">Nota ponderada</th><th scope="col">Nota objetivo</th><th scope="col">Cumplimiento</th><th scope="col">Avance</th><th scope="col">Estado</th></tr></thead><tbody id="dimension-score-body"></tbody></table></div></section>
+<div class="footer"><button class="btn primary" id="export-csv" type="button">Exportar evaluación actual CSV</button><button class="btn" id="export-json" type="button">Guardar copia de todas</button><button class="btn" id="import-json" type="button">Cargar copia</button><button class="btn" id="print" type="button">Imprimir actual / PDF</button><button class="btn" id="reset" type="button">Reiniciar evaluación actual</button><input type="file" id="import-file" accept=".json,application/json" hidden></div>
+<p class="save-note" id="save-status">Cada colaborador tiene su propia evaluación en este navegador. Guarda una copia para conservar todas las evaluaciones o trasladarlas a otro equipo.</p><div id="notice" role="status" aria-live="polite"></div>
+<section class="panel results"><h2>Resultados por proceso</h2><p class="muted">Los promedios usan solo las respuestas registradas, con igual peso por ítem. «Pendiente» no equivale a cero. Los resultados parciales no certifican un nivel de dominio.</p><div class="table-wrap"><table><caption id="result-caption">Evaluación sin respuestas.</caption><thead><tr><th scope="col">Proceso</th><th scope="col">Moderada</th><th scope="col">Alta</th><th scope="col">Muy alta</th></tr></thead><tbody id="result-body"></tbody></table></div></section><section id="print-items" aria-label="Detalle completo de la evaluación"></section>
+</main>
+<script type="application/json" id="embedded-form-config">
+{
+  "format": "assessment-design-v1",
+  "revision": "f0a1b8eb-8972-4f10-80e2-2e963bae617f",
+  "savedAt": "2026-09-09T21:27:30.979Z",
+  "processes": [
+    {
+      "id": "process-0",
+      "dimension": "dim-1",
+      "title": "Revisión del diseño y alcance",
+      "questions": [
+        {
+          "id": "question-0-0",
+          "level": 0,
+          "text": "Revisa HLD, LLD, BOM y alcance de una solución acotada; identifica inconsistencias directas."
+        },
+        {
+          "id": "question-0-1",
+          "level": 1,
+          "text": "Detecta inconsistencias entre diseños de red, seguridad, Wi-Fi o SD-WAN y determina su impacto en la implementación."
+        },
+        {
+          "id": "question-0-2",
+          "level": 2,
+          "text": "Valida la coherencia de una implementación entre múltiples Datacenter, oficinas y proveedores; identifica incompatibilidades que afectan la secuencia global del proyecto."
+        }
+      ]
+    },
+    {
+      "id": "process-1",
+      "dimension": "dim-1",
+      "title": "Validación de prerrequisitos",
+      "questions": [
+        {
+          "id": "question-1-0",
+          "level": 0,
+          "text": "Comprueba equipos, licencias, versiones, energía, cableado y accesos mediante un checklist aprobado."
+        },
+        {
+          "id": "question-1-1",
+          "level": 1,
+          "text": "Valida compatibilidades y dependencias entre plataformas; gestiona restricciones de capacidad, infraestructura y servicios externos."
+        },
+        {
+          "id": "question-1-2",
+          "level": 2,
+          "text": "Coordina prerrequisitos de múltiples sitios y tecnologías, identificando dependencias compartidas que pueden bloquear varias etapas del despliegue."
+        }
+      ]
+    },
+    {
+      "id": "process-2",
+      "dimension": "dim-2",
+      "title": "Plan de implementación (RFC)",
+      "questions": [
+        {
+          "id": "question-2-0",
+          "level": 0,
+          "text": "Prepara o adapta un procedimiento estándar con pasos, responsables y verificaciones."
+        },
+        {
+          "id": "question-2-1",
+          "level": 1,
+          "text": "Construye un procedimiento que integra varias tecnologías, ventanas, dependencias y puntos de decisión."
+        },
+        {
+          "id": "question-2-2",
+          "level": 2,
+          "text": "Desarrolla un plan por fases con coexistencia de arquitecturas, ejecución coordinada entre equipos y criterios de continuidad o reversión por etapa."
+        }
+      ]
+    },
+    {
+      "id": "process-3",
+      "dimension": "dim-1",
+      "title": "Preparación de configuraciones",
+      "questions": [
+        {
+          "id": "question-3-0",
+          "level": 0,
+          "text": "Genera configuraciones desde plantillas aprobadas y valida parámetros específicos del sitio."
+        },
+        {
+          "id": "question-3-1",
+          "level": 1,
+          "text": "Prepara configuraciones interdependientes de routing, segmentación, seguridad, Wi-Fi o SD-WAN y ejecuta revisión cruzada."
+        },
+        {
+          "id": "question-3-2",
+          "level": 2,
+          "text": "Organiza configuraciones para múltiples dominios y estados de transición, controlando versiones, excepciones y consistencia durante despliegues progresivos."
+        }
+      ]
+    },
+    {
+      "id": "process-4",
+      "dimension": "dim-2",
+      "title": "Instalación física y conectividad",
+      "questions": [
+        {
+          "id": "question-4-0",
+          "level": 0,
+          "text": "Instala y conecta equipos en un sitio, verificando montaje, energía, etiquetado y enlaces."
+        },
+        {
+          "id": "question-4-1",
+          "level": 1,
+          "text": "Coordina instalación de equipos redundantes, múltiples racks y enlaces de fibra o cobre con distintos proveedores."
+        },
+        {
+          "id": "question-4-2",
+          "level": 2,
+          "text": "Ejecuta recambios o reubicaciones en infraestructura activa de varios sitios, manteniendo rutas de servicio alternativas y controlando dependencias físicas compartidas."
+        }
+      ]
+    },
+    {
+      "id": "process-5",
+      "dimension": "dim-2",
+      "title": "Aplicación de configuraciones",
+      "questions": [
+        {
+          "id": "question-5-0",
+          "level": 0,
+          "text": "Configura equipos de una solución acotada siguiendo la secuencia aprobada."
+        },
+        {
+          "id": "question-5-1",
+          "level": 1,
+          "text": "Implementa cambios coordinados en varios equipos y plataformas, verificando su interoperabilidad."
+        },
+        {
+          "id": "question-5-2",
+          "level": 2,
+          "text": "Ejecuta una implementación por fases entre LAN, WAN, datacenter, cloud y seguridad, validando cada estado intermedio antes de continuar."
+        }
+      ]
+    },
+    {
+      "id": "process-6",
+      "dimension": "dim-2",
+      "title": "Migración y puesta en servicio",
+      "questions": [
+        {
+          "id": "question-6-0",
+          "level": 0,
+          "text": "Activa un equipo, enlace o segmento con impacto delimitado y procedimiento conocido."
+        },
+        {
+          "id": "question-6-1",
+          "level": 1,
+          "text": "Migra una sede o servicio con cambios de direccionamiento, routing o políticas, manteniendo coexistencia temporal."
+        },
+        {
+          "id": "question-6-2",
+          "level": 2,
+          "text": "Migra múltiples sedes o arquitecturas con servicios interdependientes, coordinando el movimiento de tráfico y la retirada progresiva de la infraestructura anterior."
+        }
+      ]
+    },
+    {
+      "id": "process-7",
+      "dimension": "dim-4",
+      "title": "Implementación de seguridad",
+      "questions": [
+        {
+          "id": "question-7-0",
+          "level": 0,
+          "text": "Aplica reglas de firewall, NAT y acceso administrativo para flujos aprobados."
+        },
+        {
+          "id": "question-7-1",
+          "level": 1,
+          "text": "Implementa firewalls redundantes, VPN o NAC e integra autenticación y políticas de acceso."
+        },
+        {
+          "id": "question-7-2",
+          "level": 2,
+          "text": "Migra controles de seguridad distribuidos entre sedes, datacenters y nube, preservando políticas, inspección y conectividad durante la transición."
+        }
+      ]
+    },
+    {
+      "id": "process-8",
+      "dimension": "dim-2",
+      "title": "Implementación Wi-Fi",
+      "questions": [
+        {
+          "id": "question-8-0",
+          "level": 0,
+          "text": "Instala AP y aplica perfiles aprobados de SSID, VLAN y seguridad; verifica cobertura y acceso."
+        },
+        {
+          "id": "question-8-1",
+          "level": 1,
+          "text": "Implementa autenticación empresarial, roaming y redundancia; ajusta radiofrecuencia con mediciones en terreno."
+        },
+        {
+          "id": "question-8-2",
+          "level": 2,
+          "text": "Migra o despliega Wi-Fi en entornos de alta densidad y movilidad, coordinando radiofrecuencia, identidad, aplicaciones sensibles y coexistencia con la red anterior."
+        }
+      ]
+    },
+    {
+      "id": "process-9",
+      "dimension": "dim-2",
+      "title": "Implementación SD-WAN",
+      "questions": [
+        {
+          "id": "question-9-0",
+          "level": 0,
+          "text": "Incorpora una sede con plantillas aprobadas y valida enlaces, túneles y conectividad."
+        },
+        {
+          "id": "question-9-1",
+          "level": 1,
+          "text": "Migra una sede con múltiples transportes, segmentación y políticas por aplicación, verificando conmutación y seguridad."
+        },
+        {
+          "id": "question-9-2",
+          "level": 2,
+          "text": "Ejecuta una migración multirregional con coexistencia WAN tradicional, integración cloud y seguridad, controlando políticas globales y excepciones locales."
+        }
+      ]
+    },
+    {
+      "id": "process-10",
+      "dimension": "dim-2",
+      "title": "Coordinación de actividades",
+      "questions": [
+        {
+          "id": "question-10-0",
+          "level": 0,
+          "text": "Coordina las tareas del sitio y confirma disponibilidad de los responsables."
+        },
+        {
+          "id": "question-10-1",
+          "level": 1,
+          "text": "Sincroniza equipos de red, seguridad, aplicaciones, operación y proveedores durante la ventana."
+        },
+        {
+          "id": "question-10-2",
+          "level": 2,
+          "text": "Coordina múltiples frentes y ventanas de implementación, gestionando dependencias entre sitios y decisiones que afectan al despliegue completo."
+        }
+      ]
+    },
+    {
+      "id": "process-11",
+      "dimension": "dim-3",
+      "title": "Pruebas y aceptación técnica",
+      "questions": [
+        {
+          "id": "question-11-0",
+          "level": 0,
+          "text": "Ejecuta pruebas de interfaces, conectividad, servicios de gestión y flujos autorizados."
+        },
+        {
+          "id": "question-11-1",
+          "level": 1,
+          "text": "Valida servicios de extremo a extremo, redundancia, rendimiento y conmutación ante fallas individuales."
+        },
+        {
+          "id": "question-11-2",
+          "level": 2,
+          "text": "Valida escenarios de fallas combinadas o parciales, recuperación entre sitios y continuidad de aplicaciones, tanto durante la transición como en el estado final."
+        }
+      ]
+    },
+    {
+      "id": "process-12",
+      "dimension": "dim-4",
+      "title": "Diagnóstico durante la ejecución",
+      "questions": [
+        {
+          "id": "question-12-0",
+          "level": 0,
+          "text": "Resuelve errores de direccionamiento, VLAN, interfaces, rutas o parámetros de configuración."
+        },
+        {
+          "id": "question-12-1",
+          "level": 1,
+          "text": "Diagnostica fallas que involucran varias tecnologías mediante logs, capturas, tablas de routing y pruebas dirigidas."
+        },
+        {
+          "id": "question-12-2",
+          "level": 2,
+          "text": "Aísla fallas intermitentes o distribuidas entre red, seguridad, Wi-Fi, SD-WAN, cloud y aplicaciones, correlacionando evidencia de múltiples plataformas."
+        }
+      ]
+    },
+    {
+      "id": "process-13",
+      "dimension": "dim-4",
+      "title": "Gestión de desviaciones y cambios",
+      "questions": [
+        {
+          "id": "question-13-0",
+          "level": 0,
+          "text": "Registra desviaciones y solicita aprobación cuando exceden el procedimiento autorizado."
+        },
+        {
+          "id": "question-13-1",
+          "level": 1,
+          "text": "Evalúa alternativas, impactos y ajustes de secuencia; actualiza el procedimiento y gestiona su aprobación."
+        },
+        {
+          "id": "question-13-2",
+          "level": 2,
+          "text": "Determina cómo una desviación afecta otras fases, sitios y servicios; propone una replanificación técnica con criterios explícitos de continuidad y recuperación."
+        }
+      ]
+    },
+    {
+      "id": "process-14",
+      "dimension": "dim-4",
+      "title": "Reversión y recuperación",
+      "questions": [
+        {
+          "id": "question-14-0",
+          "level": 0,
+          "text": "Restaura configuraciones o conexiones previas mediante un procedimiento probado."
+        },
+        {
+          "id": "question-14-1",
+          "level": 1,
+          "text": "Ejecuta una reversión coordinada entre varios equipos y verifica la recuperación del servicio."
+        },
+        {
+          "id": "question-14-2",
+          "level": 2,
+          "text": "Gestiona una reversión por fases cuando parte de la solución ya fue migrada, considerando dependencias y cambios que requieren acciones compensatorias."
+        }
+      ]
+    },
+    {
+      "id": "process-15",
+      "dimension": "dim-4",
+      "title": "Documentación y trazabilidad",
+      "questions": [
+        {
+          "id": "question-15-0",
+          "level": 0,
+          "text": "Registra actividades y resultados; entrega respaldos y documentación As-Built del sitio."
+        },
+        {
+          "id": "question-15-1",
+          "level": 1,
+          "text": "Consolida cambios, evidencias, diagramas y configuraciones de varias tecnologías."
+        },
+        {
+          "id": "question-15-2",
+          "level": 2,
+          "text": "Mantiene trazabilidad por sitio, fase y versión, diferenciando estados transitorios y finales y documentando las excepciones aprobadas."
+        }
+      ]
+    },
+    {
+      "id": "process-16",
+      "dimension": "dim-5",
+      "title": "Transición a Operaciones",
+      "questions": [
+        {
+          "id": "question-16-0",
+          "level": 0,
+          "text": "Entrega configuraciones, diagramas y procedimientos; realiza transferencia de conocimiento."
+        },
+        {
+          "id": "question-16-1",
+          "level": 1,
+          "text": "Entrega procedimientos de diagnóstico, contingencia y escalamiento para una solución integrada."
+        },
+        {
+          "id": "question-16-2",
+          "level": 2,
+          "text": "Coordina una transición operacional progresiva entre múltiples equipos, valida su preparación para fallas complejas y formaliza la aceptación por fases y del conjunto."
+        }
+      ]
+    },
+    {
+      "id": "extra-security-risk",
+      "dimension": "dim-4",
+      "title": "Identificación y tratamiento de riesgos",
+      "questions": [
+        {
+          "id": "extra-security-risk-0",
+          "level": 0,
+          "text": "Identifica riesgos conocidos en equipos y configuraciones utilizando listas de verificación; comunica los hallazgos antes de implementar."
+        },
+        {
+          "id": "extra-security-risk-1",
+          "level": 1,
+          "text": "Analiza riesgos derivados de la interacción entre red, seguridad, aplicaciones y terceros; propone controles y justifica su prioridad."
+        },
+        {
+          "id": "extra-security-risk-2",
+          "level": 2,
+          "text": "Evalúa riesgos combinados en arquitecturas distribuidas, migraciones y escenarios de falla; sustenta alternativas de mitigación y escala los riesgos residuales para su aceptación."
+        }
+      ]
+    },
+    {
+      "id": "extra-security-access",
+      "dimension": "dim-4",
+      "title": "Accesos, privilegios y protección de información",
+      "questions": [
+        {
+          "id": "extra-security-access-0",
+          "level": 0,
+          "text": "Aplica perfiles aprobados de mínimo privilegio; protege contraseñas, claves y certificados, y utiliza canales autorizados para compartir información."
+        },
+        {
+          "id": "extra-security-access-1",
+          "level": 1,
+          "text": "Valida segregación de funciones y acceso administrativo entre plataformas; verifica gestión remota, permisos y ciclo de vida de credenciales y certificados."
+        },
+        {
+          "id": "extra-security-access-2",
+          "level": 2,
+          "text": "Integra controles de identidad y acceso entre múltiples dominios, proveedores y nubes; verifica accesos privilegiados y de contingencia, manteniendo trazabilidad y protección de información sensible."
+        }
+      ]
+    },
+    {
+      "id": "extra-security-hardening",
+      "dimension": "dim-4",
+      "title": "Hardening y vulnerabilidades",
+      "questions": [
+        {
+          "id": "extra-security-hardening-0",
+          "level": 0,
+          "text": "Aplica hardening aprobado, deshabilita servicios inseguros e identifica versiones vulnerables o sin soporte."
+        },
+        {
+          "id": "extra-security-hardening-1",
+          "level": 1,
+          "text": "Evalúa el impacto de vulnerabilidades y actualizaciones en la solución; valida compatibilidad y controles compensatorios cuando una corrección inmediata no es viable."
+        },
+        {
+          "id": "extra-security-hardening-2",
+          "level": 2,
+          "text": "Planifica y valida la remediación en plataformas interdependientes, con coexistencia de versiones y restricciones de continuidad; documenta exposición residual y gestiona excepciones."
+        }
+      ]
+    },
+    {
+      "id": "extra-security-compliance",
+      "dimension": "dim-4",
+      "title": "Privacidad, cumplimiento y evidencias",
+      "questions": [
+        {
+          "id": "extra-security-compliance-0",
+          "level": 0,
+          "text": "Aplica los requisitos internos, contractuales y de privacidad definidos para el proyecto; conserva evidencias de accesos, cambios y configuraciones."
+        },
+        {
+          "id": "extra-security-compliance-1",
+          "level": 1,
+          "text": "Relaciona requisitos aplicables con controles técnicos y pruebas; detecta brechas de cumplimiento y coordina su resolución con los responsables."
+        },
+        {
+          "id": "extra-security-compliance-2",
+          "level": 2,
+          "text": "Analiza implicancias técnicas del tratamiento de datos entre organizaciones o ubicaciones; prepara evidencia trazable y consulta a las áreas competentes ante requisitos legales o contractuales ambiguos."
+        }
+      ]
+    },
+    {
+      "id": "extra-security-incidents",
+      "dimension": "dim-4",
+      "title": "Incidentes, excepciones y control humano",
+      "questions": [
+        {
+          "id": "extra-security-incidents-0",
+          "level": 0,
+          "text": "Informa incidentes, desviaciones y riesgos oportunamente; solicita aprobación antes de ejecutar excepciones o automatizaciones de alto impacto."
+        },
+        {
+          "id": "extra-security-incidents-1",
+          "level": 1,
+          "text": "Evalúa el alcance técnico de una desviación, propone contención y coordina su tratamiento mediante los procedimientos de seguridad y cambios."
+        },
+        {
+          "id": "extra-security-incidents-2",
+          "level": 2,
+          "text": "Coordina la respuesta técnica ante incidentes o desviaciones que afectan varios dominios; valida recuperación y establece puntos de intervención humana en automatizaciones críticas."
+        }
+      ]
+    },
+    {
+      "id": "extra-qualification-planning",
+      "dimension": "dim-3",
+      "title": "Planificación y criterios de aceptación",
+      "questions": [
+        {
+          "id": "extra-qualification-planning-0",
+          "level": 0,
+          "text": "Prepara un plan de pruebas vinculado a requisitos definidos, con prerrequisitos, resultados esperados y criterios de éxito o rechazo."
+        },
+        {
+          "id": "extra-qualification-planning-1",
+          "level": 1,
+          "text": "Diseña pruebas que cubren dependencias entre tecnologías, escenarios negativos y criterios de entrada y salida por etapa."
+        },
+        {
+          "id": "extra-qualification-planning-2",
+          "level": 2,
+          "text": "Estructura la homologación de una solución distribuida o una migración por fases; define cobertura, criterios de aceptación y condiciones para detener o revertir las pruebas."
+        }
+      ]
+    },
+    {
+      "id": "extra-qualification-environments",
+      "dimension": "dim-3",
+      "title": "Ambientes e interoperabilidad",
+      "questions": [
+        {
+          "id": "extra-qualification-environments-0",
+          "level": 0,
+          "text": "Prepara un laboratorio controlado y ejecuta pruebas funcionales y de conectividad extremo a extremo siguiendo procedimientos aprobados."
+        },
+        {
+          "id": "extra-qualification-environments-1",
+          "level": 1,
+          "text": "Reproduce integraciones entre tecnologías y fabricantes; valida versiones, protocolos y condiciones representativas del ambiente productivo."
+        },
+        {
+          "id": "extra-qualification-environments-2",
+          "level": 2,
+          "text": "Coordina ambientes de prueba para arquitecturas heterogéneas y estados de transición; identifica diferencias respecto de producción y evalúa su impacto en la validez de los resultados."
+        }
+      ]
+    },
+    {
+      "id": "extra-qualification-resilience",
+      "dimension": "dim-3",
+      "title": "Rendimiento, resiliencia y seguridad",
+      "questions": [
+        {
+          "id": "extra-qualification-resilience-0",
+          "level": 0,
+          "text": "Mide latencia, pérdida y rendimiento; verifica redundancia básica, recuperación y controles de hardening mediante pruebas definidas."
+        },
+        {
+          "id": "extra-qualification-resilience-1",
+          "level": 1,
+          "text": "Ejecuta pruebas de carga, disponibilidad y convergencia ante fallas individuales; comprueba que los controles de seguridad se mantengan durante la recuperación."
+        },
+        {
+          "id": "extra-qualification-resilience-2",
+          "level": 2,
+          "text": "Evalúa fallas simultáneas o parciales, saturación y recuperación entre sitios; correlaciona el comportamiento de red, seguridad y aplicaciones para comprobar la continuidad del servicio."
+        }
+      ]
+    },
+    {
+      "id": "extra-qualification-results",
+      "dimension": "dim-3",
+      "title": "Análisis de resultados y correcciones",
+      "questions": [
+        {
+          "id": "extra-qualification-results-0",
+          "level": 0,
+          "text": "Documenta resultados y evidencias; distingue pruebas exitosas, defectos pendientes y excepciones aceptadas, y repite las pruebas después de corregir."
+        },
+        {
+          "id": "extra-qualification-results-1",
+          "level": 1,
+          "text": "Relaciona desviaciones con sus posibles causas y requisitos afectados; ejecuta regresión sobre los componentes que podrían verse impactados por la corrección."
+        },
+        {
+          "id": "extra-qualification-results-2",
+          "level": 2,
+          "text": "Analiza resultados contradictorios o fallas intermitentes entre plataformas; determina el alcance de la regresión y demuestra que las correcciones resuelven el problema sin introducir nuevas degradaciones."
+        }
+      ]
+    },
+    {
+      "id": "extra-qualification-release",
+      "dimension": "dim-3",
+      "title": "Certificación y liberación",
+      "questions": [
+        {
+          "id": "extra-qualification-release-0",
+          "level": 0,
+          "text": "Entrega evidencias de cumplimiento y obtiene la aprobación definida antes de liberar la solución a producción."
+        },
+        {
+          "id": "extra-qualification-release-1",
+          "level": 1,
+          "text": "Consolida resultados, excepciones y defectos pendientes; sustenta técnicamente la recomendación de liberación y actualiza procedimientos con los hallazgos."
+        },
+        {
+          "id": "extra-qualification-release-2",
+          "level": 2,
+          "text": "Prepara la aceptación técnica por fases de una solución compleja, explicitando límites de las pruebas y riesgos pendientes; incorpora lecciones en estándares y procedimientos de futuros proyectos."
+        }
+      ]
+    },
+    {
+      "id": "extra-automation-opportunities",
+      "dimension": "dim-5",
+      "title": "Identificación de oportunidades y beneficios",
+      "questions": [
+        {
+          "id": "extra-automation-opportunities-0",
+          "level": 0,
+          "text": "Identifica tareas repetitivas y estima el ahorro de tiempo o reducción de errores que podría aportar su automatización."
+        },
+        {
+          "id": "extra-automation-opportunities-1",
+          "level": 1,
+          "text": "Prioriza automatizaciones según frecuencia, esfuerzo, riesgo y dependencias; compara resultados antes y después de implementarlas."
+        },
+        {
+          "id": "extra-automation-opportunities-2",
+          "level": 2,
+          "text": "Propone automatizaciones que abarcan varias etapas o tecnologías del proyecto; evalúa beneficios, costos de mantenimiento y efectos sobre la calidad y continuidad del servicio."
+        }
+      ]
+    },
+    {
+      "id": "extra-automation-scripts",
+      "dimension": "dim-5",
+      "title": "Scripts, plantillas e integración mediante APIs",
+      "questions": [
+        {
+          "id": "extra-automation-scripts-0",
+          "level": 0,
+          "text": "Utiliza scripts o plantillas aprobadas para tareas acotadas; valida datos de entrada y evita almacenar credenciales en el código."
+        },
+        {
+          "id": "extra-automation-scripts-1",
+          "level": 1,
+          "text": "Desarrolla automatizaciones entre equipos o plataformas mediante APIs; incorpora validaciones, gestión segura de secretos, controles de error y logs."
+        },
+        {
+          "id": "extra-automation-scripts-2",
+          "level": 2,
+          "text": "Orquesta acciones entre red, seguridad, cloud y otras plataformas; controla dependencias, ejecuciones parciales, reintentos y consistencia del estado ante fallas."
+        }
+      ]
+    },
+    {
+      "id": "extra-automation-testing",
+      "dimension": "dim-5",
+      "title": "Pruebas, recuperación y aprobación humana",
+      "questions": [
+        {
+          "id": "extra-automation-testing-0",
+          "level": 0,
+          "text": "Prueba los scripts en laboratorio y verifica sus resultados; solicita aprobación antes de ejecutar acciones que afecten producción."
+        },
+        {
+          "id": "extra-automation-testing-1",
+          "level": 1,
+          "text": "Valida escenarios de error, ejecución parcial y rollback; incorpora puntos de aprobación humana y condiciones de detención."
+        },
+        {
+          "id": "extra-automation-testing-2",
+          "level": 2,
+          "text": "Diseña despliegues automatizados por etapas con verificaciones independientes; implementa detención y recuperación coordinada cuando una falla afecta varios sistemas."
+        }
+      ]
+    },
+    {
+      "id": "extra-automation-analytics",
+      "dimension": "dim-5",
+      "title": "Analítica, telemetría e indicadores",
+      "questions": [
+        {
+          "id": "extra-automation-analytics-0",
+          "level": 0,
+          "text": "Recopila y analiza logs, telemetría y métricas para detectar desviaciones; presenta indicadores técnicos relevantes para el proyecto."
+        },
+        {
+          "id": "extra-automation-analytics-1",
+          "level": 1,
+          "text": "Correlaciona datos de varias fuentes, verifica su calidad y distingue tendencias, anomalías y problemas de medición."
+        },
+        {
+          "id": "extra-automation-analytics-2",
+          "level": 2,
+          "text": "Integra datos de múltiples dominios para investigar degradaciones o anticipar restricciones; valida hipótesis, incertidumbre y utilidad de los indicadores antes de recomendar acciones."
+        }
+      ]
+    },
+    {
+      "id": "extra-automation-ai",
+      "dimension": "dim-5",
+      "title": "Uso de inteligencia artificial",
+      "questions": [
+        {
+          "id": "extra-automation-ai-0",
+          "level": 0,
+          "text": "Utiliza IA para apoyar documentación, análisis o generación de configuraciones; revisa sus resultados y protege la información utilizada."
+        },
+        {
+          "id": "extra-automation-ai-1",
+          "level": 1,
+          "text": "Contrasta recomendaciones de IA con documentación, datos y pruebas; detecta errores y valida scripts o configuraciones antes de proponer su aplicación."
+        },
+        {
+          "id": "extra-automation-ai-2",
+          "level": 2,
+          "text": "Integra IA en flujos de análisis o automatización con alcance limitado, evaluación de resultados, trazabilidad e intervención humana obligatoria antes de acciones sobre producción."
+        }
+      ]
+    },
+    {
+      "id": "extra-automation-reuse",
+      "dimension": "dim-5",
+      "title": "Documentación, versiones y reutilización",
+      "questions": [
+        {
+          "id": "extra-automation-reuse-0",
+          "level": 0,
+          "text": "Documenta propósito, alcance y uso de una automatización; mantiene sus archivos bajo control de versiones."
+        },
+        {
+          "id": "extra-automation-reuse-1",
+          "level": 1,
+          "text": "Documenta riesgos, dependencias y procedimientos de recuperación; registra cambios y comparte componentes reutilizables con el equipo."
+        },
+        {
+          "id": "extra-automation-reuse-2",
+          "level": 2,
+          "text": "Mantiene automatizaciones utilizadas por varios proyectos, controlando compatibilidad, versiones y pruebas de regresión; mide su adopción y mejora a partir de resultados e incidentes."
+        }
+      ]
+    }
+  ],
+  "scale": [
+    {
+      "value": 1,
+      "label": "Inicial",
+      "description": "No demuestra el criterio; requiere guía paso a paso."
+    },
+    {
+      "value": 2,
+      "label": "En desarrollo",
+      "description": "Lo realiza parcialmente y necesita apoyo frecuente."
+    },
+    {
+      "value": 3,
+      "label": "Competente",
+      "description": "Cumple el criterio con apoyo puntual."
+    },
+    {
+      "value": 4,
+      "label": "Destacado",
+      "description": "Cumple el criterio sin apoyo y sobre lo esperado."
+    },
+    {
+      "value": 5,
+      "label": "Referente",
+      "description": "Arquitecto"
+    }
+  ],
+  "weights": {
+    "complexity": [
+      20,
+      30,
+      50
+    ],
+    "dimensions": [
+      20,
+      50,
+      10,
+      10,
+      10
+    ]
+  },
+  "contentUpdates": [
+    "criterios-seguridad-homologacion-ia-20260909"
+  ],
+  "targets": [
+    4,
+    5,
+    1,
+    4,
+    3
+  ]
+}
+</script>
+<script>
+'use strict';
+const DATA = [
+['Revisión del diseño y alcance',
+'Revisa HLD, LLD, BOM y alcance de una solución acotada; identifica inconsistencias directas.',
+'Detecta inconsistencias entre diseños de red, seguridad, Wi-Fi o SD-WAN y determina su impacto en la implementación.',
+'Valida la coherencia de una implementación entre múltiples dominios, sedes y proveedores; identifica incompatibilidades que afectan la secuencia global del proyecto.'],
+['Validación de prerrequisitos',
+'Comprueba equipos, licencias, versiones, energía, cableado y accesos mediante un checklist aprobado.',
+'Valida compatibilidades y dependencias entre plataformas; gestiona restricciones de capacidad, infraestructura y servicios externos.',
+'Coordina prerrequisitos de múltiples sitios y tecnologías, identificando dependencias compartidas que pueden bloquear varias etapas del despliegue.'],
+['Plan de implementación — MOP',
+'Prepara o adapta un procedimiento estándar con pasos, responsables y verificaciones.',
+'Construye un procedimiento que integra varias tecnologías, ventanas, dependencias y puntos de decisión.',
+'Desarrolla un plan por fases con coexistencia de arquitecturas, ejecución coordinada entre equipos y criterios de continuidad o reversión por etapa.'],
+['Preparación de configuraciones',
+'Genera configuraciones desde plantillas aprobadas y valida parámetros específicos del sitio.',
+'Prepara configuraciones interdependientes de routing, segmentación, seguridad, Wi-Fi o SD-WAN y ejecuta revisión cruzada.',
+'Organiza configuraciones para múltiples dominios y estados de transición, controlando versiones, excepciones y consistencia durante despliegues progresivos.'],
+['Instalación física y conectividad',
+'Instala y conecta equipos en un sitio, verificando montaje, energía, etiquetado y enlaces.',
+'Coordina instalación de equipos redundantes, múltiples racks y enlaces de fibra o cobre con distintos proveedores.',
+'Ejecuta recambios o reubicaciones en infraestructura activa de varios sitios, manteniendo rutas de servicio alternativas y controlando dependencias físicas compartidas.'],
+['Aplicación de configuraciones',
+'Configura equipos de una solución acotada siguiendo la secuencia aprobada.',
+'Implementa cambios coordinados en varios equipos y plataformas, verificando su interoperabilidad.',
+'Ejecuta una implementación por fases entre LAN, WAN, datacenter, cloud y seguridad, validando cada estado intermedio antes de continuar.'],
+['Migración y puesta en servicio',
+'Activa un equipo, enlace o segmento con impacto delimitado y procedimiento conocido.',
+'Migra una sede o servicio con cambios de direccionamiento, routing o políticas, manteniendo coexistencia temporal.',
+'Migra múltiples sedes o arquitecturas con servicios interdependientes, coordinando el movimiento de tráfico y la retirada progresiva de la infraestructura anterior.'],
+['Implementación de seguridad',
+'Aplica reglas de firewall, NAT y acceso administrativo para flujos aprobados.',
+'Implementa firewalls redundantes, VPN o NAC e integra autenticación y políticas de acceso.',
+'Migra controles de seguridad distribuidos entre sedes, datacenters y nube, preservando políticas, inspección y conectividad durante la transición.'],
+['Implementación Wi-Fi',
+'Instala AP y aplica perfiles aprobados de SSID, VLAN y seguridad; verifica cobertura y acceso.',
+'Implementa autenticación empresarial, roaming y redundancia; ajusta radiofrecuencia con mediciones en terreno.',
+'Migra o despliega Wi-Fi en entornos de alta densidad y movilidad, coordinando radiofrecuencia, identidad, aplicaciones sensibles y coexistencia con la red anterior.'],
+['Implementación SD-WAN',
+'Incorpora una sede con plantillas aprobadas y valida enlaces, túneles y conectividad.',
+'Migra una sede con múltiples transportes, segmentación y políticas por aplicación, verificando conmutación y seguridad.',
+'Ejecuta una migración multirregional con coexistencia WAN tradicional, integración cloud y seguridad, controlando políticas globales y excepciones locales.'],
+['Coordinación de actividades',
+'Coordina las tareas del sitio y confirma disponibilidad de los responsables.',
+'Sincroniza equipos de red, seguridad, aplicaciones, operación y proveedores durante la ventana.',
+'Coordina múltiples frentes y ventanas de implementación, gestionando dependencias entre sitios y decisiones que afectan al despliegue completo.'],
+['Pruebas y aceptación técnica',
+'Ejecuta pruebas de interfaces, conectividad, servicios de gestión y flujos autorizados.',
+'Valida servicios de extremo a extremo, redundancia, rendimiento y conmutación ante fallas individuales.',
+'Valida escenarios de fallas combinadas o parciales, recuperación entre sitios y continuidad de aplicaciones, tanto durante la transición como en el estado final.'],
+['Diagnóstico durante la ejecución',
+'Resuelve errores de direccionamiento, VLAN, interfaces, rutas o parámetros de configuración.',
+'Diagnostica fallas que involucran varias tecnologías mediante logs, capturas, tablas de routing y pruebas dirigidas.',
+'Aísla fallas intermitentes o distribuidas entre red, seguridad, Wi-Fi, SD-WAN, cloud y aplicaciones, correlacionando evidencia de múltiples plataformas.'],
+['Gestión de desviaciones y cambios',
+'Registra desviaciones y solicita aprobación cuando exceden el procedimiento autorizado.',
+'Evalúa alternativas, impactos y ajustes de secuencia; actualiza el procedimiento y gestiona su aprobación.',
+'Determina cómo una desviación afecta otras fases, sitios y servicios; propone una replanificación técnica con criterios explícitos de continuidad y recuperación.'],
+['Reversión y recuperación',
+'Restaura configuraciones o conexiones previas mediante un procedimiento probado.',
+'Ejecuta una reversión coordinada entre varios equipos y verifica la recuperación del servicio.',
+'Gestiona una reversión por fases cuando parte de la solución ya fue migrada, considerando dependencias y cambios que requieren acciones compensatorias.'],
+['Documentación y trazabilidad',
+'Registra actividades y resultados; entrega respaldos y documentación As-Built del sitio.',
+'Consolida cambios, evidencias, diagramas y configuraciones de varias tecnologías.',
+'Mantiene trazabilidad por sitio, fase y versión, diferenciando estados transitorios y finales y documentando las excepciones aprobadas.'],
+['Transición a Operaciones',
+'Entrega configuraciones, diagramas y procedimientos; realiza transferencia de conocimiento.',
+'Entrega procedimientos de diagnóstico, contingencia y escalamiento para una solución integrada.',
+'Coordina una transición operacional progresiva entre múltiples equipos, valida su preparación para fallas complejas y formaliza la aceptación por fases y del conjunto.']
+];
+const CONTENT_UPDATE='criterios-seguridad-homologacion-ia-20260909';
+const EXTRA_PROCESS_ROWS=[
+['security-risk','dim-4','Identificación y tratamiento de riesgos',
+'Identifica riesgos conocidos en equipos y configuraciones utilizando listas de verificación; comunica los hallazgos antes de implementar.',
+'Analiza riesgos derivados de la interacción entre red, seguridad, aplicaciones y terceros; propone controles y justifica su prioridad.',
+'Evalúa riesgos combinados en arquitecturas distribuidas, migraciones y escenarios de falla; sustenta alternativas de mitigación y escala los riesgos residuales para su aceptación.'],
+['security-access','dim-4','Accesos, privilegios y protección de información',
+'Aplica perfiles aprobados de mínimo privilegio; protege contraseñas, claves y certificados, y utiliza canales autorizados para compartir información.',
+'Valida segregación de funciones y acceso administrativo entre plataformas; verifica gestión remota, permisos y ciclo de vida de credenciales y certificados.',
+'Integra controles de identidad y acceso entre múltiples dominios, proveedores y nubes; verifica accesos privilegiados y de contingencia, manteniendo trazabilidad y protección de información sensible.'],
+['security-hardening','dim-4','Hardening y vulnerabilidades',
+'Aplica hardening aprobado, deshabilita servicios inseguros e identifica versiones vulnerables o sin soporte.',
+'Evalúa el impacto de vulnerabilidades y actualizaciones en la solución; valida compatibilidad y controles compensatorios cuando una corrección inmediata no es viable.',
+'Planifica y valida la remediación en plataformas interdependientes, con coexistencia de versiones y restricciones de continuidad; documenta exposición residual y gestiona excepciones.'],
+['security-compliance','dim-4','Privacidad, cumplimiento y evidencias',
+'Aplica los requisitos internos, contractuales y de privacidad definidos para el proyecto; conserva evidencias de accesos, cambios y configuraciones.',
+'Relaciona requisitos aplicables con controles técnicos y pruebas; detecta brechas de cumplimiento y coordina su resolución con los responsables.',
+'Analiza implicancias técnicas del tratamiento de datos entre organizaciones o ubicaciones; prepara evidencia trazable y consulta a las áreas competentes ante requisitos legales o contractuales ambiguos.'],
+['security-incidents','dim-4','Incidentes, excepciones y control humano',
+'Informa incidentes, desviaciones y riesgos oportunamente; solicita aprobación antes de ejecutar excepciones o automatizaciones de alto impacto.',
+'Evalúa el alcance técnico de una desviación, propone contención y coordina su tratamiento mediante los procedimientos de seguridad y cambios.',
+'Coordina la respuesta técnica ante incidentes o desviaciones que afectan varios dominios; valida recuperación y establece puntos de intervención humana en automatizaciones críticas.'],
+['qualification-planning','dim-3','Planificación y criterios de aceptación',
+'Prepara un plan de pruebas vinculado a requisitos definidos, con prerrequisitos, resultados esperados y criterios de éxito o rechazo.',
+'Diseña pruebas que cubren dependencias entre tecnologías, escenarios negativos y criterios de entrada y salida por etapa.',
+'Estructura la homologación de una solución distribuida o una migración por fases; define cobertura, criterios de aceptación y condiciones para detener o revertir las pruebas.'],
+['qualification-environments','dim-3','Ambientes e interoperabilidad',
+'Prepara un laboratorio controlado y ejecuta pruebas funcionales y de conectividad extremo a extremo siguiendo procedimientos aprobados.',
+'Reproduce integraciones entre tecnologías y fabricantes; valida versiones, protocolos y condiciones representativas del ambiente productivo.',
+'Coordina ambientes de prueba para arquitecturas heterogéneas y estados de transición; identifica diferencias respecto de producción y evalúa su impacto en la validez de los resultados.'],
+['qualification-resilience','dim-3','Rendimiento, resiliencia y seguridad',
+'Mide latencia, pérdida y rendimiento; verifica redundancia básica, recuperación y controles de hardening mediante pruebas definidas.',
+'Ejecuta pruebas de carga, disponibilidad y convergencia ante fallas individuales; comprueba que los controles de seguridad se mantengan durante la recuperación.',
+'Evalúa fallas simultáneas o parciales, saturación y recuperación entre sitios; correlaciona el comportamiento de red, seguridad y aplicaciones para comprobar la continuidad del servicio.'],
+['qualification-results','dim-3','Análisis de resultados y correcciones',
+'Documenta resultados y evidencias; distingue pruebas exitosas, defectos pendientes y excepciones aceptadas, y repite las pruebas después de corregir.',
+'Relaciona desviaciones con sus posibles causas y requisitos afectados; ejecuta regresión sobre los componentes que podrían verse impactados por la corrección.',
+'Analiza resultados contradictorios o fallas intermitentes entre plataformas; determina el alcance de la regresión y demuestra que las correcciones resuelven el problema sin introducir nuevas degradaciones.'],
+['qualification-release','dim-3','Certificación y liberación',
+'Entrega evidencias de cumplimiento y obtiene la aprobación definida antes de liberar la solución a producción.',
+'Consolida resultados, excepciones y defectos pendientes; sustenta técnicamente la recomendación de liberación y actualiza procedimientos con los hallazgos.',
+'Prepara la aceptación técnica por fases de una solución compleja, explicitando límites de las pruebas y riesgos pendientes; incorpora lecciones en estándares y procedimientos de futuros proyectos.'],
+['automation-opportunities','dim-5','Identificación de oportunidades y beneficios',
+'Identifica tareas repetitivas y estima el ahorro de tiempo o reducción de errores que podría aportar su automatización.',
+'Prioriza automatizaciones según frecuencia, esfuerzo, riesgo y dependencias; compara resultados antes y después de implementarlas.',
+'Propone automatizaciones que abarcan varias etapas o tecnologías del proyecto; evalúa beneficios, costos de mantenimiento y efectos sobre la calidad y continuidad del servicio.'],
+['automation-scripts','dim-5','Scripts, plantillas e integración mediante APIs',
+'Utiliza scripts o plantillas aprobadas para tareas acotadas; valida datos de entrada y evita almacenar credenciales en el código.',
+'Desarrolla automatizaciones entre equipos o plataformas mediante APIs; incorpora validaciones, gestión segura de secretos, controles de error y logs.',
+'Orquesta acciones entre red, seguridad, cloud y otras plataformas; controla dependencias, ejecuciones parciales, reintentos y consistencia del estado ante fallas.'],
+['automation-testing','dim-5','Pruebas, recuperación y aprobación humana',
+'Prueba los scripts en laboratorio y verifica sus resultados; solicita aprobación antes de ejecutar acciones que afecten producción.',
+'Valida escenarios de error, ejecución parcial y rollback; incorpora puntos de aprobación humana y condiciones de detención.',
+'Diseña despliegues automatizados por etapas con verificaciones independientes; implementa detención y recuperación coordinada cuando una falla afecta varios sistemas.'],
+['automation-analytics','dim-5','Analítica, telemetría e indicadores',
+'Recopila y analiza logs, telemetría y métricas para detectar desviaciones; presenta indicadores técnicos relevantes para el proyecto.',
+'Correlaciona datos de varias fuentes, verifica su calidad y distingue tendencias, anomalías y problemas de medición.',
+'Integra datos de múltiples dominios para investigar degradaciones o anticipar restricciones; valida hipótesis, incertidumbre y utilidad de los indicadores antes de recomendar acciones.'],
+['automation-ai','dim-5','Uso de inteligencia artificial',
+'Utiliza IA para apoyar documentación, análisis o generación de configuraciones; revisa sus resultados y protege la información utilizada.',
+'Contrasta recomendaciones de IA con documentación, datos y pruebas; detecta errores y valida scripts o configuraciones antes de proponer su aplicación.',
+'Integra IA en flujos de análisis o automatización con alcance limitado, evaluación de resultados, trazabilidad e intervención humana obligatoria antes de acciones sobre producción.'],
+['automation-reuse','dim-5','Documentación, versiones y reutilización',
+'Documenta propósito, alcance y uso de una automatización; mantiene sus archivos bajo control de versiones.',
+'Documenta riesgos, dependencias y procedimientos de recuperación; registra cambios y comparte componentes reutilizables con el equipo.',
+'Mantiene automatizaciones utilizadas por varios proyectos, controlando compatibilidad, versiones y pruebas de regresión; mide su adopción y mejora a partir de resultados e incidentes.']
+];
+function additionalProcesses(){return EXTRA_PROCESS_ROWS.map(([id,dimension,title,...texts])=>({id:'extra-'+id,dimension,title,questions:texts.map((text,level)=>({id:`extra-${id}-${level}`,level,text}))}));}
+function applyContentUpdate(current){
+ if(current.contentUpdates.includes(CONTENT_UPDATE))return current;
+ const next=clone(current),ids=new Set(next.processes.map(p=>p.id));
+ for(const process of additionalProcesses())if(!ids.has(process.id))next.processes.push(process);
+ next.processes=validateProcesses(next.processes);
+ next.contentUpdates.push(CONTENT_UPDATE);
+ return next;
+}
+
+// Captura el documento antes de renderizar nombres, respuestas o resultados locales.
+const PRISTINE_HTML=typeof document.documentElement?.outerHTML==='string'?'<!DOCTYPE html>\n'+document.documentElement.outerHTML:'';
+let designFileHandle=null;
+function validateDesign(raw){
+ if(!raw||raw.format!=='assessment-design-v1'||typeof raw.revision!=='string'||!raw.revision||raw.revision.length>100)throw new Error('El diseño incorporado al HTML no es válido.');
+ if(!Array.isArray(raw.contentUpdates)||raw.contentUpdates.some(id=>typeof id!=='string'||id.length>120))throw new Error('El registro del diseño no es válido.');
+ return {format:raw.format,revision:raw.revision,savedAt:typeof raw.savedAt==='string'?raw.savedAt:'',processes:validateProcesses(raw.processes),scale:validateScale(raw.scale),weights:validateWeights(raw.weights),targets:validateTargets(raw.targets===undefined?DEFAULT_TARGETS:raw.targets),contentUpdates:[...new Set(raw.contentUpdates)]};
+}
+function designFromState(current){return validateDesign({format:'assessment-design-v1',revision:crypto.randomUUID(),savedAt:new Date().toISOString(),processes:current.processes,scale:current.scale,weights:current.weights,targets:current.targets,contentUpdates:current.contentUpdates});}
+function applyDesign(current,raw){
+ if(raw===null)return current;
+ const design=validateDesign(raw);
+ if(current.designRevision===design.revision)return current;
+ const {next}=prepareQuestionChanges(current,design.processes);
+ return {...next,scale:design.scale,weights:design.weights,targets:design.targets,contentUpdates:design.contentUpdates,designRevision:design.revision};
+}
+function applyEmbeddedDesign(current){const text=document.getElementById('embedded-form-config')?.textContent||'null';return applyDesign(current,JSON.parse(text));}
+function buildPermanentHTML(source,design){
+ const checked=validateDesign(design);
+ const json=JSON.stringify(checked,null,2).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
+ const marker=/(<script\b[^>]*\bid="embedded-form-config"[^>]*>)[\s\S]*?(<\/script>)/;
+ if(!marker.test(source))throw new Error('No se encontró el espacio para guardar el diseño dentro del HTML.');
+ return source.replace(marker,(_,start,end)=>start+'\n'+json+'\n'+end);
+}
+async function writePermanentHTML(current){
+ const design=designFromState(current),html=buildPermanentHTML(PRISTINE_HTML,design);
+ if(typeof window.showSaveFilePicker==='function'){
+  let handle=designFileHandle;
+  if(!handle)handle=await window.showSaveFilePicker({suggestedName:'assessment-implementacion-redes.html',types:[{description:'Formulario HTML',accept:{'text/html':['.html']}}]});
+  const existing=await handle.getFile();
+  if(existing.size>0){const text=await existing.text();if(!text.includes('assessment-implementacion-redes-v1'))throw new Error('Selecciona el HTML de este assessment o un archivo nuevo; el archivo elegido contiene otro documento.');}
+  const writer=await handle.createWritable();
+  try{await writer.write(html);await writer.close();}catch(error){try{await writer.abort();}catch{}throw error;}
+  designFileHandle=handle;
+  return {design,mode:'file',message:`Diseño guardado directamente en ${handle.name}. Las evaluaciones permanecen locales.`};
+ }
+ const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download='assessment-implementacion-redes.html';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ return {design,mode:'download',message:'Se descargó el HTML con el diseño actualizado. Reemplaza manualmente el archivo anterior para que el cambio quede permanente; este navegador no permite sobrescribirlo directamente.'};
+}
+function showDesignResult(result){$('design-file-status').textContent=result.message;$('notice').textContent=result.message;}
+async function exportCurrentDesign(){
+ const button=$('save-design-html');button.disabled=true;
+ try{const result=await writePermanentHTML(state);state.designRevision=result.design.revision;persist();showDesignResult(result);}catch(error){$('design-file-status').textContent=error.name==='AbortError'?'Guardado cancelado. El archivo HTML no cambió.':'No se guardó el HTML: '+error.message;}finally{button.disabled=false;}
+}
+
+const LEVELS=['Moderada','Alta','Muy alta'];
+const DEFAULT_SCALE=[
+ {value:1,label:'Inicial',description:'No demuestra el criterio; requiere guía paso a paso.'},
+ {value:2,label:'En desarrollo',description:'Lo realiza parcialmente y necesita apoyo frecuente.'},
+ {value:3,label:'Competente',description:'Cumple el criterio con apoyo puntual.'},
+ {value:4,label:'Autónomo',description:'Cumple el criterio sin apoyo y justifica sus decisiones.'},
+ {value:5,label:'Referente',description:'Cumple con autonomía, anticipa problemas y puede orientar a otros.'}
+];
+const KEY='assessment-implementacion-redes-v1';
+const $=id=>document.getElementById(id);
+const clone=value=>JSON.parse(JSON.stringify(value));
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+const PEOPLE_LIMITS={engineer:20,evaluator:5};
+const DEFAULT_PEOPLE={engineer:['Segundo Painemal','José Valderrama','Ricardo Reveco','Sair Cañate','Guillermo Muñoz'],evaluator:['Richard Peña','Ivan Rivas']};
+const normalizedName=name=>name.trim().replace(/\s+/g,' ').normalize('NFC');
+const nameKey=name=>normalizedName(name).toLocaleLowerCase('es');
+const DIMENSIONS=[{id:'dim-1',title:'Fundamentos Técnicos'},{id:'dim-2',title:'Implementación'},{id:'dim-3',title:'Homologación'},{id:'dim-4',title:'Seguridad'},{id:'dim-5',title:'Automatización, IA'}];
+const dimensionForIndex=index=>DIMENSIONS[Math.min(Math.floor(index/4),4)].id;
+const dimensionTitle=id=>DIMENSIONS.find(d=>d.id===id)?.title||'';
+const DEFAULT_WEIGHTS={complexity:[20,30,50],dimensions:[20,50,10,10,10]};
+const DEFAULT_TARGETS=[4,5,1,4,3];
+function validateTargets(raw){
+ if(!Array.isArray(raw)||raw.length!==DIMENSIONS.length||raw.some(n=>typeof n!=='number'||!Number.isFinite(n)||n<1||n>5))throw new Error('Las notas objetivo deben estar entre 1 y 5. Completa las cinco dimensiones.');
+ return [...raw];
+}
+function validateWeights(raw){
+ if(!raw||typeof raw!=='object')throw new Error('Configura las ponderaciones.');
+ const result={};
+ for(const [key,size,label] of [['complexity',3,'complejidades'],['dimensions',5,'dimensiones']]){
+  const values=raw[key];
+  if(!Array.isArray(values)||values.length!==size||values.some(n=>typeof n!=='number'||!Number.isFinite(n)||n<0||n>100))throw new Error(`Los porcentajes de ${label} deben estar entre 0 y 100.`);
+  if(Math.abs(values.reduce((a,b)=>a+b,0)-100)>0.000001)throw new Error(`Las ponderaciones de ${label} deben sumar 100%.`);
+  result[key]=[...values];
+ }
+ return result;
+}
+const defaultProcesses=()=>DATA.map((row,i)=>({id:`process-${i}`,dimension:dimensionForIndex(i),title:row[0],questions:LEVELS.map((_,level)=>({id:`question-${i}-${level}`,level,text:row[level+1]}))}));
+const blank=()=>({version:7,meta:{engineer:'',evaluator:'',project:'',date:today()},people:clone(DEFAULT_PEOPLE),processes:defaultProcesses(),scale:clone(DEFAULT_SCALE),weights:clone(DEFAULT_WEIGHTS),targets:clone(DEFAULT_TARGETS),answers:{},active:0,evaluations:{},contentUpdates:[],designRevision:''});
+function validateScale(raw){
+ if(!Array.isArray(raw)||raw.length!==5)throw new Error('La escala debe contener los cinco niveles del 1 al 5.');
+ return raw.map((entry,index)=>{
+  if(!entry||entry.value!==index+1)throw new Error('Los puntajes deben mantenerse ordenados del 1 al 5.');
+  if(typeof entry.label!=='string'||!entry.label.trim()||entry.label.length>60)throw new Error(`Escribe un nombre para el nivel ${index+1} (máximo 60 caracteres).`);
+  if(typeof entry.description!=='string'||!entry.description.trim()||entry.description.length>600)throw new Error(`Escribe una descripción para el nivel ${index+1} (máximo 600 caracteres).`);
+  return {value:entry.value,label:entry.label.trim(),description:entry.description.trim()};
+ });
+}
+function prepareScaleChanges(current,scale,weights=current.weights,targets=current.targets){return {...current,scale:validateScale(scale),weights:validateWeights(weights),targets:validateTargets(targets)};}
+const evaluationKey=name=>'person:'+nameKey(name);
+function stashEvaluation(current){current.evaluations[evaluationKey(current.meta.engineer)]={meta:clone(current.meta),answers:clone(current.answers),active:current.active};return current;}
+function switchEvaluation(current,name){
+ const selected=name?current.people.engineer.find(person=>nameKey(person)===nameKey(name)):'';
+ if(name&&!selected)throw new Error('Selecciona un colaborador de la lista.');
+ const next=stashEvaluation(clone(current));
+ const record=next.evaluations[evaluationKey(selected)]||{meta:{engineer:selected,evaluator:'',project:'',date:today()},answers:{},active:0};
+ next.meta=clone(record.meta);next.meta.engineer=selected;next.answers=clone(record.answers);next.active=record.active;
+ return stashEvaluation(next);
+}
+function addPerson(people,role,name){
+ if(!Object.hasOwn(PEOPLE_LIMITS,role))throw new Error('Lista inválida.');
+ const clean=normalizedName(name);
+ if(!clean)throw new Error('Escribe el nombre y apellido.');
+ if(clean.length>160)throw new Error('El nombre no puede superar 160 caracteres.');
+ if(people[role].some(existing=>nameKey(existing)===nameKey(clean)))throw new Error('Esta persona ya está en la lista.');
+ if(people[role].length>=PEOPLE_LIMITS[role])throw new Error(`La lista admite hasta ${PEOPLE_LIMITS[role]} personas.`);
+ people[role].push(clean);return clean;
+}
+function validateProcesses(raw,migrate=false){
+ if(!Array.isArray(raw)||!raw.length||raw.length>100)throw new Error('Debe haber entre 1 y 100 procesos.');
+ const ids=new Set();let total=0;
+ function checkID(id){if(typeof id!=='string'||! /^[a-zA-Z0-9_-]{1,100}$/.test(id)||ids.has(id))throw new Error('Hay identificadores de preguntas o procesos inválidos o repetidos.');ids.add(id);return id;}
+ const result=raw.map((p,index)=>{
+  if(!p||typeof p.title!=='string'||!p.title.trim()||p.title.length>200)throw new Error(`Escribe un nombre válido para el proceso ${index+1}.`);
+  const id=checkID(p.id);
+  const dimension=p.dimension===undefined&&migrate?dimensionForIndex(index):p.dimension;
+  if(!DIMENSIONS.some(d=>d.id===dimension))throw new Error(`Selecciona una dimensión válida para «${p.title}».`);
+  if(!Array.isArray(p.questions))throw new Error(`Las preguntas de «${p.title}» no son válidas.`);
+  const questions=p.questions.map((q,i)=>{
+   if(!q||typeof q.text!=='string'||!q.text.trim()||q.text.length>3000)throw new Error(`Completa la pregunta ${i+1} de «${p.title}» (máximo 3000 caracteres).`);
+   if(!Number.isInteger(q.level)||q.level<0||q.level>2)throw new Error('Selecciona una complejidad válida.');
+   total++;return {id:checkID(q.id),level:q.level,text:q.text.trim()};
+  });return {id,dimension,title:p.title.trim(),questions};
+ });
+ if(total<1||total>500)throw new Error('El formulario debe tener entre 1 y 500 preguntas.');
+ return result;
+}
+function validate(raw){
+ if(!raw||![1,2,3,4,5,6,7].includes(raw.version)||!raw.meta||!raw.answers||typeof raw.answers!=='object'||Array.isArray(raw.answers))throw new Error('Formato incompatible.');
+ const clean=blank();
+ if(raw.designRevision!==undefined){if(typeof raw.designRevision!=='string'||raw.designRevision.length>100)throw new Error('Versión de diseño inválida.');clean.designRevision=raw.designRevision;}
+ if(raw.contentUpdates!==undefined){if(!Array.isArray(raw.contentUpdates)||raw.contentUpdates.length>30||raw.contentUpdates.some(id=>typeof id!=='string'||id.length>120))throw new Error('Registro de actualizaciones inválido.');clean.contentUpdates=[...new Set(raw.contentUpdates)];}
+ if(raw.version>=5)clean.scale=validateScale(raw.scale);
+ if(raw.version>=6)clean.weights=validateWeights(raw.weights);
+ if(raw.version>=7)clean.targets=validateTargets(raw.targets);
+ for(const key of Object.keys(clean.meta)){if(typeof raw.meta[key]!=='string'||raw.meta[key].length>200)throw new Error('Datos de evaluación inválidos.');clean.meta[key]=raw.meta[key];}
+ if(raw.people!==undefined){
+  if(!raw.people||typeof raw.people!=='object')throw new Error('Listas de personas inválidas.');
+  for(const role of Object.keys(PEOPLE_LIMITS)){
+   if(!Array.isArray(raw.people[role])||raw.people[role].length>PEOPLE_LIMITS[role])throw new Error(`La lista admite hasta ${PEOPLE_LIMITS[role]} personas.`);
+   clean.people[role]=[];
+   for(const name of raw.people[role]){if(typeof name!=='string')throw new Error('Nombre inválido.');addPerson(clean.people,role,name);}
+  }
+ }
+ for(const role of Object.keys(PEOPLE_LIMITS)){if(clean.meta[role].trim()){const match=clean.people[role].find(name=>nameKey(name)===nameKey(clean.meta[role]));clean.meta[role]=match||addPerson(clean.people,role,clean.meta[role]);}}
+ if(clean.meta.date&&!/^\d{4}-\d{2}-\d{2}$/.test(clean.meta.date))throw new Error('Fecha inválida.');
+ if(raw.version>=2)clean.processes=validateProcesses(raw.processes,raw.version<4);
+ const validIDs=new Set(clean.processes.flatMap(p=>p.questions.map(q=>q.id)));
+ for(const [key,value] of Object.entries(raw.answers)){
+  let id=key;
+  if(raw.version===1){if(!/^(\d+)-([0-2])$/.test(key))throw new Error('Respuesta anterior inválida.');id=`question-${key}`;}
+  if(!validIDs.has(id)||!Number.isInteger(value)||value<1||value>5)throw new Error('Respuesta inválida: revisa la pregunta y su nota de 1 a 5.');
+  clean.answers[id]=value;
+ }
+ if(Number.isInteger(raw.active)&&raw.active>=0&&raw.active<clean.processes.length)clean.active=raw.active;
+ if(raw.version>=3){
+  if(!raw.evaluations||typeof raw.evaluations!=='object'||Array.isArray(raw.evaluations)||Object.keys(raw.evaluations).length>21)throw new Error('Evaluaciones por colaborador inválidas.');
+  for(const [key,record] of Object.entries(raw.evaluations)){
+   if(!record||!record.meta||typeof record.meta.engineer!=='string'||key!==evaluationKey(record.meta.engineer))throw new Error('La evaluación no corresponde a su colaborador.');
+   if(record.meta.engineer&&!clean.people.engineer.some(name=>nameKey(name)===nameKey(record.meta.engineer)))throw new Error('La copia contiene un colaborador que no está en la lista.');
+   const checked=validate({...record,version:2,processes:clean.processes,people:clean.people});
+   clean.evaluations[key]={meta:checked.meta,answers:checked.answers,active:checked.active};
+  }
+ }
+ return stashEvaluation(clean);
+}
+let state=blank();
+const scaleLabel=value=>state.scale[value-1].label;
+try{const saved=localStorage.getItem(KEY);if(saved)state=validate(JSON.parse(saved));}catch(e){$('save-status').textContent='No se pudo recuperar el guardado local. Puedes cargar una copia o iniciar una evaluación.';}
+state=applyContentUpdate(state);
+try{state=applyEmbeddedDesign(state);}catch(error){$('notice').textContent='No se pudo aplicar el diseño del archivo: '+error.message;}
+function persist(){stashEvaluation(state);try{localStorage.setItem(KEY,JSON.stringify(state));$('save-status').textContent='Cada colaborador tiene su propia evaluación guardada en este navegador. «Guardar copia» incluye todas las evaluaciones, preguntas y listas.';$('save-status').classList.remove('error');}catch(e){$('save-status').textContent='El navegador no permite el guardado automático. Usa «Guardar copia» antes de cerrar para conservar todas las evaluaciones.';$('save-status').classList.add('error');}}
+const allQuestions=()=>state.processes.flatMap(p=>p.questions);
+function metric(level,questions=allQuestions()){const group=questions.filter(q=>q.level===level),values=group.map(q=>state.answers[q.id]).filter(Number.isInteger);return {total:group.length,count:values.length,average:values.length?values.reduce((a,b)=>a+b,0)/values.length:null};}
+function weightedReport(current=state){
+ const dimensions=DIMENSIONS.map((d,index)=>{
+  const questions=current.processes.filter(p=>p.dimension===d.id).flatMap(p=>p.questions);
+  const metrics=LEVELS.map((_,level)=>{const group=questions.filter(q=>q.level===level),scores=group.map(q=>current.answers[q.id]).filter(Number.isInteger);return {total:group.length,count:scores.length,average:scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null};});
+  const missing=metrics.flatMap((m,level)=>current.weights.complexity[level]>0&&m.average===null?[level]:[]);
+  const count=metrics.reduce((sum,m)=>sum+m.count,0),total=questions.length;
+  const score=missing.length?null:metrics.reduce((sum,m,l)=>sum+(current.weights.complexity[l]===0?0:m.average*current.weights.complexity[l]/100),0);
+  const target=current.targets[index],compliance=score===null?null:score/target*100;
+  return {...d,weight:current.weights.dimensions[index],target,compliance,metrics,count,total,score,missing,complete:total>0&&count===total&&score!==null};
+ });
+ const total=dimensions.reduce((sum,d)=>sum+d.total,0),count=dimensions.reduce((sum,d)=>sum+d.count,0);
+ const missing=dimensions.filter(d=>d.weight>0&&d.score===null);
+ const score=missing.length?null:dimensions.reduce((sum,d)=>sum+(d.weight===0?0:d.score*d.weight/100),0);
+ const compliance=missing.length?null:dimensions.reduce((sum,d)=>sum+(d.weight===0?0:d.compliance*d.weight/100),0);
+ return {dimensions,total,count,percent:total?count/total*100:0,missing,score,compliance,complete:count===total&&score!==null};
+}
+const percentText=value=>value.toLocaleString('es-CL',{maximumFractionDigits:1})+'%';
+function complianceChartData(report){return report.dimensions.map(d=>{
+ const value=d.compliance===null?null:Math.abs(d.compliance-100)<1e-9?100:d.compliance;
+ const contribution=d.weight===0?0:value===null?null:value*d.weight/100;
+ return {...d,compliance:value,reached:d.weight===0?0:value===null?null:Math.min(100,Math.max(0,value)),gap:contribution===null?null:Math.max(0,d.weight-contribution),excess:contribution===null?null:Math.max(0,contribution-d.weight),contribution};
+});}
+function renderComplianceChart(report){
+ const chart=$('compliance-chart');chart.replaceChildren();
+ complianceChartData(report).forEach(d=>{
+  const row=document.createElement('li');row.className='compliance-row';
+  const heading=document.createElement('div');heading.className='compliance-row-heading';
+  const title=document.createElement('strong');title.textContent=d.title;
+  const status=document.createElement('span');status.className='compliance-gap';
+  status.textContent=d.gap===null?'Brecha pendiente':d.excess>0?`Meta superada · +${percentText(d.excess)}`:`Brecha: ${percentText(d.gap)}`;
+  heading.append(title,status);
+  const track=document.createElement('div');track.className='compliance-track'+(d.contribution===null||d.weight===0?' is-pending':'');track.setAttribute('role','img');
+  track.setAttribute('aria-label',d.contribution===null?`${d.title}: faltan respuestas para calcular aporte y brecha.`:`${d.title}: aporte al total ${percentText(d.contribution)}, peso ${percentText(d.weight)}, brecha ${percentText(d.gap)}.`);
+  if(d.compliance!==null){const fill=document.createElement('span');fill.className='compliance-fill';fill.setAttribute('style',`width:${d.reached}%`);track.append(fill);}
+  const details=document.createElement('div');details.className='compliance-row-details';
+  const achieved=document.createElement('span');achieved.textContent=d.compliance===null?'Cumplimiento: sin cobertura':`Cumplimiento: ${percentText(d.compliance)}${d.complete?'':' · parcial'}`;
+  const contribution=document.createElement('span');contribution.textContent=d.weight===0?'Sin peso en el aporte total':`Aporte al total: ${d.contribution===null?'pendiente':percentText(d.contribution)} · peso ${percentText(d.weight)}`;
+  details.append(achieved,contribution);row.append(heading,track,details);chart.append(row);
+ });
+}
+function renderWeightedSummary(){
+ const report=weightedReport();$('weighted-score').textContent=avgText(report.score);$('weighted-status').textContent=report.complete?'Resultado final':!report.count?'Sin evaluar':'Resultado parcial';
+ renderComplianceChart(report);
+ $('compliance-score').textContent=report.compliance===null?'—':percentText(report.compliance);
+ $('compliance-status').textContent=report.complete?'Cumplimiento final':!report.count?'Sin evaluar':report.compliance===null?'Falta cobertura':'Cumplimiento parcial';
+ $('compliance-status').classList.toggle('complete',report.complete);
+ $('compliance-formula').textContent='Aporte cumplimiento = suma de (nota ponderada de cada dimensión ÷ su nota objetivo × su peso). Se expresa en porcentaje; puede superar el 100%.';
+ $('weighted-status').classList.toggle('complete',report.complete);
+ $('weighted-progress').textContent=`${percentText(report.percent)} de avance · ${report.count} de ${report.total} preguntas respondidas`;
+ $('weighted-explanation').textContent=report.score===null?'Para calcular la nota ponderada, evalúa al menos una pregunta de cada complejidad con peso en cada dimensión con peso. No se sustituyen pendientes por cero ni se redistribuyen sus porcentajes.':report.complete?'Evaluación completa. El resultado combina las notas por complejidad dentro de cada dimensión y luego el peso de las cinco dimensiones.':'Nota provisional calculada con las respuestas disponibles. Los promedios pueden cambiar al completar las preguntas pendientes.';
+ $('weight-formula').textContent='En cada dimensión: '+LEVELS.map((name,i)=>`${name} ${percentText(state.weights.complexity[i])}`).join(' + ')+'. Resultado final: suma de las notas de dimensión multiplicadas por su peso.';
+ $('dimension-score-body').replaceChildren();
+ report.dimensions.forEach(d=>{const row=document.createElement('tr'),title=document.createElement('th');title.scope='row';title.textContent=d.title;row.append(title);
+  const values=[percentText(d.weight),...d.metrics.map(m=>m.average===null?(m.total?'Pendiente':'Sin preguntas'):avgText(m.average)),d.score===null?'Pendiente':avgText(d.score),avgText(d.target),d.compliance===null?'Pendiente':percentText(d.compliance),`${d.total?percentText(d.count/d.total*100):'0%'} (${d.count}/${d.total})`,d.weight===0?'Sin peso final':d.complete?'Completa':d.score===null?'Falta cobertura':'Parcial'];
+  values.forEach(value=>{const cell=document.createElement('td');cell.textContent=value;row.append(cell);});$('dimension-score-body').append(row);
+ });
+}
+function avgText(value){return value===null?'—':value.toLocaleString('es-CL',{minimumFractionDigits:2,maximumFractionDigits:2})+' / 5';}
+let openedDimension=null;
+function renderNavigation(){
+ $('navigation').replaceChildren();
+ DIMENSIONS.forEach((dimension,di)=>{
+  const group=document.createElement('details');group.className='dimension-group';group.dataset.dimension=dimension.id;group.open=openedDimension===dimension.id;
+  const summary=document.createElement('summary');summary.innerHTML='<span class="dimension-name"></span><span class="dimension-progress"></span>';
+  summary.querySelector('.dimension-name').textContent=`${di+1}. ${dimension.title}`;group.append(summary);
+  group.addEventListener('toggle',()=>{if(group.open){openedDimension=dimension.id;document.querySelectorAll('.dimension-group').forEach(other=>{if(other!==group)other.open=false;});}else if(openedDimension===dimension.id)openedDimension=null;});
+  const list=document.createElement('div');list.className='dimension-processes';
+  state.processes.forEach((p,i)=>{if(p.dimension!==dimension.id)return;const button=document.createElement('button');button.type='button';button.className='nav-button';button.dataset.index=i;button.innerHTML='<span class="nav-number"></span><span class="nav-label"></span><span class="count"></span>';button.querySelector('.nav-number').textContent=String(i+1).padStart(2,'0');button.querySelector('.nav-label').textContent=p.title;button.addEventListener('click',()=>selectProcess(i));list.append(button);});
+  if(!list.children.length){const empty=document.createElement('p');empty.className='muted';empty.textContent='Sin procesos. Puedes agregar uno desde Administrar preguntas.';list.append(empty);}
+  group.append(list);$('navigation').append(group);
+ });
+}
+function syncSummary(){
+ const total=allQuestions().length,count=Object.keys(state.answers).length;
+ $('evaluation-owner').textContent=state.meta.engineer?`Evaluación de ${state.meta.engineer}`:'Borrador sin colaborador';
+ document.querySelector('header p').textContent=`5 dimensiones · ${state.processes.length} procesos · ${total} ítems para evaluar de 1 a 5`;
+ $('progress-text').textContent=`${count} / ${total}`;$('progress').max=total;$('progress').value=count;$('pending').textContent=`${percentText(total?count/total*100:0)} respondido · ${total-count} pendientes`;
+ LEVELS.forEach((_,level)=>{const m=metric(level);$(`avg-${level}`).textContent=avgText(m.average);$(`answered-${level}`).textContent=m.total?`${m.count} de ${m.total} evaluados`:'Sin preguntas en esta complejidad';});
+ document.querySelectorAll('.nav-button').forEach(button=>{const i=Number(button.dataset.index),questions=state.processes[i].questions,n=questions.filter(q=>state.answers[q.id]).length;button.querySelector('.count').textContent=`${n}/${questions.length}`;button.querySelector('.count').classList.toggle('done',questions.length>0&&n===questions.length);if(i===state.active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');});
+ document.querySelectorAll('.dimension-group').forEach(group=>{const processes=state.processes.filter(p=>p.dimension===group.dataset.dimension),questions=processes.flatMap(p=>p.questions),count=questions.filter(q=>state.answers[q.id]).length;group.querySelector('.dimension-progress').textContent=`${processes.length} procesos · ${count}/${questions.length} evaluados`;group.classList.toggle('has-current',group.dataset.dimension===state.processes[state.active].dimension);});
+ $('result-caption').textContent=(count===total?`Evaluación completa: ${total} ítems respondidos.`:`Resultado parcial: ${count} de ${total} ítems respondidos.`)+' Cada celda muestra el promedio de las preguntas respondidas y su avance.';
+ $('result-body').replaceChildren();
+ DIMENSIONS.forEach(dimension=>{const heading=document.createElement('tr');heading.className='dimension-result';const title=document.createElement('th');title.colSpan=4;title.scope='rowgroup';title.textContent=dimension.title;heading.append(title);$('result-body').append(heading);state.processes.filter(p=>p.dimension===dimension.id).forEach(p=>{const tr=document.createElement('tr'),th=document.createElement('th');th.scope='row';th.style.textAlign='left';th.textContent=p.title;tr.append(th);LEVELS.forEach((_,l)=>{const td=document.createElement('td'),m=metric(l,p.questions);td.textContent=!m.total?'Sin preguntas':!m.count?`Pendiente (0/${m.total})`:`${avgText(m.average)} (${m.count}/${m.total})`;tr.append(td);});$('result-body').append(tr);});});
+ renderWeightedSummary();
+}
+function renderQuestions(){
+ const i=state.active,p=state.processes[i];
+ $('step').textContent=`${dimensionTitle(p.dimension)} · PROCESO ${String(i+1).padStart(2,'0')}`;$('process-title').textContent=p.title;$('page-status').textContent=`${i+1} / ${state.processes.length}`;
+ $('previous').disabled=i===0;$('next').textContent=i===state.processes.length-1?'Ver resultados ↓':'Siguiente →';$('questions').replaceChildren();
+ if(!p.questions.length){const empty=document.createElement('p');empty.className='question muted';empty.textContent='Este proceso aún no tiene preguntas. Agrégalas o muévelas aquí desde Administrar preguntas.';$('questions').append(empty);}
+ p.questions.forEach(q=>{
+  const key=q.id,field=document.createElement('fieldset');field.className='question';field.setAttribute('aria-describedby',`statement-${key}`);
+  field.innerHTML=`<legend><span class="badge badge-${q.level}">Complejidad ${LEVELS[q.level].toLowerCase()}</span></legend><div class="question-body"><p class="statement" id="statement-${key}"></p><div class="rating-bar"><div class="ratings"></div><span class="answer-label" id="answer-${key}" aria-live="polite"></span><button type="button" class="clear">Dejar pendiente</button></div></div>`;
+  field.querySelector('.statement').textContent=q.text;
+  for(let n=1;n<=5;n++){const label=document.createElement('label');label.className='rating';label.title=state.scale[n-1].description;const input=document.createElement('input');input.type='radio';input.name=`rating-${key}`;input.value=n;input.setAttribute('aria-label',`${n} · ${scaleLabel(n)}`);input.checked=state.answers[key]===n;const span=document.createElement('span');span.textContent=n;label.append(input,span);field.querySelector('.ratings').append(label);input.addEventListener('change',()=>{state.answers[key]=n;$(`answer-${key}`).textContent=`${n} · ${scaleLabel(n)}`;persist();syncSummary();});}
+  field.querySelector('.answer-label').textContent=state.answers[key]?`${state.answers[key]} · ${scaleLabel(state.answers[key])}`:'Sin evaluar';
+  field.querySelector('.clear').addEventListener('click',()=>{delete state.answers[key];field.querySelectorAll('input').forEach(input=>input.checked=false);$(`answer-${key}`).textContent='Sin evaluar';persist();syncSummary();});$('questions').append(field);
+ });
+}
+function selectProcess(index){state.active=index;openedDimension=state.processes[index].dimension;document.querySelectorAll('.dimension-group').forEach(group=>group.open=group.dataset.dimension===openedDimension);renderQuestions();syncSummary();persist();$('process-title').focus({preventScroll:true});$('process-title').scrollIntoView({block:'start',behavior:'auto'});}
+function renderPeople(){
+ for(const role of Object.keys(PEOPLE_LIMITS)){
+  const select=$(role);select.replaceChildren();const empty=document.createElement('option');empty.value='';empty.textContent=role==='engineer'?'Selecciona un colaborador':'Selecciona un evaluador';select.append(empty);
+  state.people[role].forEach(name=>{const option=document.createElement('option');option.value=name;option.textContent=name;select.append(option);});select.value=state.meta[role];$(`${role}-count`).textContent=`${state.people[role].length} de ${PEOPLE_LIMITS[role]} personas`;
+  const full=state.people[role].length>=PEOPLE_LIMITS[role];$(`${role}-add`).disabled=full;$(`${role}-new`).disabled=full;$(`${role}-editor`).querySelector('summary').textContent=full?'Límite de personas alcanzado':role==='engineer'?'Agregar colaborador':'Agregar evaluador';
+ }
+}
+function fillMeta(){renderPeople();Object.keys(state.meta).forEach(key=>$(key).value=state.meta[key]);}
+function refreshEvaluation(){fillMeta();renderScale();renderNavigation();renderQuestions();syncSummary();}
+function changeCollaborator(name){state=switchEvaluation(state,name);persist();refreshEvaluation();$('notice').textContent=state.meta.engineer?`Evaluación de ${state.meta.engineer} cargada. ${Object.keys(state.answers).length} preguntas respondidas.`:'Borrador sin colaborador cargado.';}
+function handleAddPerson(role){try{const name=addPerson(state.people,role,$(`${role}-new`).value);if(role==='engineer')changeCollaborator(name);else{state.meta[role]=name;renderPeople();persist();}$(`${role}-new`).value='';$(`${role}-message`).textContent=`${name} se agregó y quedó seleccionado.`;$(`${role}-editor`).open=false;$(role).focus();}catch(error){$(`${role}-message`).textContent=error.message;}}
+function download(content,type,extension){const url=URL.createObjectURL(new Blob([content],{type}));const link=document.createElement('a');link.href=url;link.download=`assessment-redes-${state.meta.date||today()}.${extension}`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('notice').textContent='Se solicitó la descarga. Revisa la carpeta de descargas de tu navegador.';}
+function csvCell(value){let text=String(value??'');if(/^[\s]*[=+@-]/.test(text))text="'"+text;return '"'+text.replaceAll('"','""')+'"';}
+function buildCSV(){const report=weightedReport(),num=n=>n===null?'':n.toLocaleString('es-CL',{maximumFractionDigits:4,useGrouping:false});const rows=[['Colaborador','Evaluador','Assesment','Fecha','Dimensión','Proceso','Complejidad','Criterio','Nota (1 a 5)','Nivel','Estado','Descripción del nivel','Peso complejidad (%)','Peso dimensión (%)','Nota ponderada dimensión','Resultado ponderado','Estado resultado','Avance (%)','Nota objetivo dimensión','Cumplimiento dimensión (%)','Aporte cumplimiento (%)']];state.processes.forEach(p=>p.questions.forEach(q=>{const score=state.answers[q.id],dimension=report.dimensions.find(d=>d.id===p.dimension);rows.push([state.meta.engineer,state.meta.evaluator,state.meta.project,state.meta.date,dimensionTitle(p.dimension),p.title,LEVELS[q.level],q.text,score??'',score?scaleLabel(score):'',score?'Evaluado':'Pendiente',score?state.scale[score-1].description:'',num(state.weights.complexity[q.level]),num(dimension.weight),num(dimension.score),num(report.score),report.complete?'Final':report.score===null?'Pendiente de cobertura':'Parcial',num(report.percent),num(dimension.target),num(dimension.compliance),num(report.compliance)]);}));return '\uFEFF'+rows.map(row=>row.map(csvCell).join(';')).join('\r\n');}
+function buildPrint(){const target=$('print-items');target.replaceChildren();const scaleTitle=document.createElement('h2');scaleTitle.textContent='Escala de evaluación';target.append(scaleTitle);state.scale.forEach(entry=>{const p=document.createElement('p');p.textContent=`${entry.value} · ${entry.label}: ${entry.description}`;target.append(p);});const title=document.createElement('h2');title.textContent='Detalle de los criterios evaluados';target.append(title);DIMENSIONS.forEach(d=>{const dh=document.createElement('h2');dh.textContent=d.title;target.append(dh);state.processes.filter(p=>p.dimension===d.id).forEach(process=>{const article=document.createElement('article');article.className='print-process';const h=document.createElement('h3');h.textContent=process.title;article.append(h);process.questions.forEach(q=>{const p=document.createElement('p'),strong=document.createElement('strong'),value=state.answers[q.id];strong.textContent=`${LEVELS[q.level]} · ${value?`${value}/5 — ${scaleLabel(value)}`:'Pendiente'}: `;p.append(strong,document.createTextNode(q.text));article.append(p);});target.append(article);});});}
+// Los cambios del editor se preparan en una copia, sin alterar la evaluación abierta.
+let adminDraft=null,adminIndex=0;
+const newID=prefix=>`${prefix}-${crypto.randomUUID()}`;
+function prepareQuestionChanges(current,rawProcesses){
+ const processes=validateProcesses(rawProcesses),old=new Map(current.processes.flatMap(p=>p.questions).map(q=>[q.id,q])),next=stashEvaluation(clone(current));let cleared=0;
+ for(const record of Object.values(next.evaluations)){
+  const answers={};
+  for(const p of processes)for(const q of p.questions){const previous=old.get(q.id);if(previous&&previous.text===q.text&&previous.level===q.level&&Object.hasOwn(record.answers,q.id))answers[q.id]=record.answers[q.id];}
+  cleared+=Object.keys(record.answers).length-Object.keys(answers).length;record.answers=answers;
+  const activeID=current.processes[record.active]?.id,found=processes.findIndex(p=>p.id===activeID);record.active=found>=0?found:Math.min(record.active,processes.length-1);
+ }
+ next.processes=processes;const selected=next.evaluations[evaluationKey(next.meta.engineer)];next.answers=clone(selected.answers);next.active=selected.active;
+ return {next,cleared};
+}
+function freshEvaluation(current){const fresh=stashEvaluation(clone(current));fresh.meta={engineer:current.meta.engineer,evaluator:'',project:'',date:today()};fresh.answers={};fresh.active=0;return stashEvaluation(fresh);}
+function adminOptions(){const select=$('admin-process');select.replaceChildren();DIMENSIONS.forEach(d=>{const group=document.createElement('optgroup');group.label=d.title;adminDraft.forEach((p,i)=>{if(p.dimension!==d.id)return;const option=document.createElement('option');option.value=i;option.textContent=`${i+1}. ${p.title||'Proceso sin nombre'}`;group.append(option);});select.append(group);});select.value=adminIndex;}
+function fillDimensions(select,selected){select.replaceChildren();DIMENSIONS.forEach(d=>{const option=document.createElement('option');option.value=d.id;option.textContent=d.title;select.append(option);});select.value=selected;}
+function moveProcess(processes,processID,dimensionID){
+ const process=processes.find(p=>p.id===processID);
+ if(!process||!DIMENSIONS.some(d=>d.id===dimensionID))throw new Error('Selecciona un proceso y una dimensión de destino válidos.');
+ if(process.dimension===dimensionID)throw new Error('El proceso ya pertenece a esa dimensión.');
+ process.dimension=dimensionID;
+ return process;
+}
+function moveQuestion(processes,questionID,targetID){
+ const source=processes.find(p=>p.questions.some(q=>q.id===questionID)),target=processes.find(p=>p.id===targetID);
+ if(!source||!target)throw new Error('Selecciona un proceso de destino válido.');
+ if(source.id===target.id)throw new Error('La pregunta ya pertenece a ese proceso.');
+ const index=source.questions.findIndex(q=>q.id===questionID);target.questions.push(source.questions.splice(index,1)[0]);
+ return target;
+}
+function renderAdmin(){
+ adminOptions();const process=adminDraft[adminIndex];$('admin-process-title').value=process.title;$('admin-question-list').replaceChildren();$('admin-error').textContent='';$('admin-delete-process').disabled=adminDraft.length===1;
+ fillDimensions($('admin-dimension'),process.dimension);
+ $('admin-move-process').disabled=true;$('process-move-status').textContent='';
+ $('admin-current-dimension').textContent=`Ubicación actual: ${dimensionTitle(process.dimension)}. Incluye ${process.questions.length} preguntas: `+LEVELS.map((level,i)=>`${process.questions.filter(q=>q.level===i).length} de complejidad ${level.toLowerCase()}`).join(', ')+'.';
+ process.questions.forEach((q,index)=>{
+  const box=document.createElement('div');box.className='admin-question';
+  box.innerHTML='<div class="admin-question-head"><div><label></label><select></select></div><button type="button" class="btn danger">Eliminar pregunta</button></div><label class="question-text-label"></label><textarea maxlength="3000"></textarea>';
+  const select=box.querySelector('select'),label=box.querySelector('label'),textarea=box.querySelector('textarea');
+  select.id=`admin-level-${q.id}`;label.htmlFor=select.id;label.textContent=`Pregunta ${index+1} · Complejidad`;
+  LEVELS.forEach((text,level)=>{const option=document.createElement('option');option.value=level;option.textContent=text;select.append(option);});select.value=q.level;select.addEventListener('change',()=>q.level=Number(select.value));
+  textarea.id=`admin-text-${q.id}`;box.querySelector('.question-text-label').htmlFor=textarea.id;box.querySelector('.question-text-label').textContent='Texto de la pregunta';textarea.value=q.text;textarea.addEventListener('input',()=>q.text=textarea.value);
+  box.querySelector('button').addEventListener('click',()=>{if(adminDraft.flatMap(p=>p.questions).length===1){$('admin-error').textContent='El formulario debe conservar al menos una pregunta.';return;}if(!confirm('¿Quitar esta pregunta? Se eliminará al guardar los cambios.'))return;process.questions=process.questions.filter(item=>item.id!==q.id);renderAdmin();});
+  const mover=document.createElement('div');mover.className='question-mover';mover.innerHTML='<div><label>Dimensión de destino</label><select class="move-dimension"></select></div><div><label>Proceso de destino</label><select class="move-process"></select></div><button class="btn" type="button">Mover pregunta</button>';
+  const dimensionSelect=mover.querySelector('.move-dimension'),processSelect=mover.querySelector('.move-process'),moveButton=mover.querySelector('button');
+  dimensionSelect.id=`move-dimension-${q.id}`;processSelect.id=`move-process-${q.id}`;mover.querySelectorAll('label')[0].htmlFor=dimensionSelect.id;mover.querySelectorAll('label')[1].htmlFor=processSelect.id;
+  fillDimensions(dimensionSelect,process.dimension);
+  function destinations(){processSelect.replaceChildren();adminDraft.filter(p=>p.dimension===dimensionSelect.value&&p.id!==process.id).forEach(p=>{const option=document.createElement('option');option.value=p.id;option.textContent=p.title||'Proceso sin nombre';processSelect.append(option);});const empty=!processSelect.options.length;if(empty){const option=document.createElement('option');option.value='';option.textContent='No hay otro proceso en esta dimensión';processSelect.append(option);}processSelect.disabled=empty;moveButton.disabled=empty;}
+  destinations();dimensionSelect.addEventListener('change',destinations);
+  moveButton.addEventListener('click',()=>{try{const target=moveQuestion(adminDraft,q.id,processSelect.value);renderAdmin();$('admin-error').textContent=`Pregunta movida a «${target.title}» en ${dimensionTitle(target.dimension)}. Pulsa «Guardar en HTML» para aplicarlo.`;}catch(error){$('admin-error').textContent=error.message;}});
+  const individualMove=document.createElement('details'),individualTitle=document.createElement('summary');individualMove.className='individual-move';individualTitle.textContent='Mover solo esta pregunta';individualMove.append(individualTitle,mover);box.append(individualMove);$('admin-question-list').append(box);
+ });
+}
+function openAdmin(){adminDraft=clone(state.processes);adminIndex=state.active;renderAdmin();$('admin-dialog').showModal();}
+function cancelAdmin(){if(JSON.stringify(adminDraft)!==JSON.stringify(state.processes)&&!confirm('¿Descartar los cambios sin guardar?'))return;$('admin-dialog').close();adminDraft=null;}
+async function saveAdmin(){
+ const button=$('admin-save');button.disabled=true;
+ try{const result=prepareQuestionChanges(state,adminDraft);if(result.cleared&&!confirm(`Este cambio dejará pendientes ${result.cleared} nota(s) de preguntas editadas o eliminadas. Las demás se conservarán. ¿Guardar el diseño en HTML?`))return;const saved=await writePermanentHTML(result.next);state={...result.next,designRevision:saved.design.revision};persist();renderNavigation();renderQuestions();syncSummary();$('admin-dialog').close();adminDraft=null;showDesignResult(saved);}
+ catch(error){$('admin-error').textContent=error.name==='AbortError'?'Guardado cancelado. Tus cambios siguen en el editor y el HTML no cambió.':error.message;}
+ finally{button.disabled=false;}
+}
+let scaleDraft=null,weightsDraft=null,targetsDraft=null;
+function renderScale(){const grid=document.querySelector('.scale-grid');grid.replaceChildren();state.scale.forEach(entry=>{const card=document.createElement('div'),title=document.createElement('strong'),description=document.createElement('span');title.textContent=`${entry.value} · ${entry.label}`;description.textContent=entry.description;card.append(title,description);grid.append(card);});}
+function renderScaleEditor(){
+ $('scale-fields').replaceChildren();$('scale-error').textContent='';
+ renderWeightEditor();renderTargetEditor();
+ scaleDraft.forEach(entry=>{const field=document.createElement('fieldset');field.className='scale-editor-row';const legend=document.createElement('legend');legend.textContent=`Puntaje ${entry.value}`;field.append(legend);
+ const nameLabel=document.createElement('label'),name=document.createElement('input');name.id=`scale-label-${entry.value}`;nameLabel.htmlFor=name.id;nameLabel.textContent='Nombre del nivel';name.value=entry.label;name.maxLength=60;name.addEventListener('input',()=>entry.label=name.value);
+ const descriptionLabel=document.createElement('label'),description=document.createElement('textarea');description.id=`scale-description-${entry.value}`;descriptionLabel.htmlFor=description.id;descriptionLabel.textContent='Descripción del desempeño';description.value=entry.description;description.maxLength=600;description.addEventListener('input',()=>entry.description=description.value);
+ field.append(nameLabel,name,descriptionLabel,description);$('scale-fields').append(field);
+ });
+}
+function renderWeightEditor(){
+ for(const [key,names] of [['complexity',LEVELS],['dimensions',DIMENSIONS.map(d=>d.title)]]){
+  const fields=$(`weights-${key}`);fields.replaceChildren();
+  names.forEach((name,i)=>{const label=document.createElement('label');label.textContent=`${name} (%)`;const input=document.createElement('input');input.type='number';input.min=0;input.max=100;input.step='0.01';input.value=weightsDraft[key][i];input.id=`weight-${key}-${i}`;input.setAttribute('aria-describedby',`weights-${key}-total`);input.addEventListener('input',()=>{weightsDraft[key][i]=input.value===''?NaN:Number(input.value);updateWeightTotals();});label.append(input);fields.append(label);});
+ }
+ updateWeightTotals();
+}
+function renderTargetEditor(){
+ const fields=$('targets-fields');fields.replaceChildren();
+ DIMENSIONS.forEach((dimension,index)=>{const label=document.createElement('label'),input=document.createElement('input');label.textContent=dimension.title;input.id='target-'+dimension.id;input.type='number';input.min='1';input.max='5';input.step='0.01';input.required=true;input.value=targetsDraft[index];input.setAttribute('aria-describedby','targets-status');input.addEventListener('input',()=>{targetsDraft[index]=input.value===''?NaN:Number(input.value);updateWeightTotals();});label.append(input);fields.append(label);});
+ updateWeightTotals();
+}
+function updateWeightTotals(){
+ for(const key of ['complexity','dimensions']){const values=weightsDraft[key],total=values.reduce((a,b)=>a+b,0),valid=values.every(n=>Number.isFinite(n)&&n>=0&&n<=100)&&Math.abs(total-100)<0.000001;const node=$(`weights-${key}-total`);node.textContent=Number.isFinite(total)?`Total: ${percentText(total)} · ${valid?'Correcto':'Debe sumar 100%'}`:'Completa todos los porcentajes';node.classList.toggle('invalid',!valid);}
+ let validTargets=true;try{validateTargets(targetsDraft);$('targets-status').textContent='Notas objetivo válidas · escala de 1 a 5';}catch(error){validTargets=false;$('targets-status').textContent=error.message;}$('targets-status').classList.toggle('invalid',!validTargets);
+ try{validateWeights(weightsDraft);$('scale-save').disabled=!validTargets;}catch(error){$('scale-save').disabled=true;}
+}
+function cancelScale(){if((JSON.stringify(scaleDraft)!==JSON.stringify(state.scale)||JSON.stringify(weightsDraft)!==JSON.stringify(state.weights)||JSON.stringify(targetsDraft)!==JSON.stringify(state.targets))&&!confirm('¿Descartar los cambios de la escala, las ponderaciones y las notas objetivo sin guardar?'))return;$('scale-dialog').close();scaleDraft=null;weightsDraft=null;targetsDraft=null;}
+// Eventos de la interfaz.
+$('save-design-html').addEventListener('click',exportCurrentDesign);
+$('manage-scale').addEventListener('click',()=>{scaleDraft=clone(state.scale);weightsDraft=clone(state.weights);targetsDraft=clone(state.targets);renderScaleEditor();$('scale-dialog').showModal();});
+$('scale-save').addEventListener('click',async()=>{const button=$('scale-save');button.disabled=true;try{const prepared=prepareScaleChanges(state,scaleDraft,weightsDraft,targetsDraft);const saved=await writePermanentHTML(prepared);state={...prepared,designRevision:saved.design.revision};persist();renderScale();renderQuestions();syncSummary();$('scale-dialog').close();scaleDraft=null;weightsDraft=null;targetsDraft=null;showDesignResult(saved);}catch(error){$('scale-error').textContent=error.name==='AbortError'?'Guardado cancelado. El HTML no cambió y tus ajustes siguen en el editor.':error.message;}finally{button.disabled=false;}});
+$('scale-cancel').addEventListener('click',cancelScale);
+$('scale-dialog').addEventListener('cancel',event=>{event.preventDefault();cancelScale();});
+$('scale-defaults').addEventListener('click',()=>{if(!confirm('¿Restablecer los nombres y descripciones originales? Se aplicarán cuando guardes los cambios.'))return;scaleDraft=clone(DEFAULT_SCALE);renderScaleEditor();});
+$('targets-defaults').addEventListener('click',()=>{targetsDraft=clone(DEFAULT_TARGETS);renderTargetEditor();});
+$('weights-defaults').addEventListener('click',()=>{weightsDraft=clone(DEFAULT_WEIGHTS);renderWeightEditor();});
+Object.keys(state.meta).filter(key=>key!=='engineer').forEach(key=>$(key).addEventListener('input',()=>{state.meta[key]=$(key).value;persist();}));
+$('engineer').addEventListener('change',()=>changeCollaborator($('engineer').value));
+for(const role of Object.keys(PEOPLE_LIMITS)){if(role!=='engineer')$(role).addEventListener('change',()=>{state.meta[role]=$(role).value;persist();});$(`${role}-add`).addEventListener('click',()=>handleAddPerson(role));$(`${role}-new`).addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();handleAddPerson(role);}});}
+$('manage-questions').addEventListener('click',openAdmin);
+$('admin-process').addEventListener('change',()=>{adminIndex=Number($('admin-process').value);renderAdmin();});
+$('admin-dimension').addEventListener('change',()=>{$('admin-move-process').disabled=$('admin-dimension').value===adminDraft[adminIndex].dimension;});
+$('admin-move-process').addEventListener('click',()=>{try{const process=moveProcess(adminDraft,adminDraft[adminIndex].id,$('admin-dimension').value);renderAdmin();$('process-move-status').textContent=`«${process.title}» se trasladará completo a ${dimensionTitle(process.dimension)}, con sus ${process.questions.length} preguntas y todas sus complejidades. Pulsa «Guardar en HTML» para aplicarlo.`;}catch(error){$('process-move-status').textContent=error.message;}});
+$('admin-process-title').addEventListener('input',()=>{adminDraft[adminIndex].title=$('admin-process-title').value;adminOptions();});
+$('admin-add-question').addEventListener('click',()=>{if(adminDraft.flatMap(p=>p.questions).length>=500){$('admin-error').textContent='El formulario admite hasta 500 preguntas.';return;}const q={id:newID('question'),level:0,text:''};adminDraft[adminIndex].questions.push(q);renderAdmin();$(`admin-text-${q.id}`).focus();});
+$('admin-add-process').addEventListener('click',()=>{if(adminDraft.length>=100||adminDraft.flatMap(p=>p.questions).length>497){$('admin-error').textContent='Se alcanzó el límite de 100 procesos o 500 preguntas.';return;}adminDraft.push({id:newID('process'),dimension:adminDraft[adminIndex].dimension,title:'Nuevo proceso',questions:LEVELS.map((_,level)=>({id:newID('question'),level,text:''}))});adminIndex=adminDraft.length-1;renderAdmin();$('admin-process-title').focus();$('admin-process-title').select();});
+$('admin-delete-process').addEventListener('click',()=>{if(adminDraft.length<=1)return;if(!confirm('¿Quitar este proceso y todas sus preguntas? Se eliminarán al guardar los cambios.'))return;adminDraft.splice(adminIndex,1);adminIndex=Math.min(adminIndex,adminDraft.length-1);renderAdmin();});
+$('admin-save').addEventListener('click',saveAdmin);$('admin-cancel').addEventListener('click',cancelAdmin);$('admin-dialog').addEventListener('cancel',event=>{event.preventDefault();cancelAdmin();});
+$('previous').addEventListener('click',()=>{if(state.active>0)selectProcess(state.active-1);});
+$('next').addEventListener('click',()=>{if(state.active<state.processes.length-1)selectProcess(state.active+1);else document.querySelector('.results').scrollIntoView({behavior:'smooth'});});
+$('export-csv').addEventListener('click',()=>download(buildCSV(),'text/csv;charset=utf-8','csv'));
+$('export-json').addEventListener('click',()=>download(JSON.stringify({...stashEvaluation(state),savedAt:new Date().toISOString()},null,2),'application/json;charset=utf-8','json'));
+$('import-json').addEventListener('click',()=>$('import-file').click());
+$('import-file').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{if(file.size>4000000)throw new Error('El archivo supera el tamaño esperado.');const imported=applyEmbeddedDesign(applyContentUpdate(validate(JSON.parse(await file.text()))));if(!confirm('¿Cargar esta copia y reemplazar las evaluaciones locales? Se respetará el diseño incorporado en este HTML. Guarda antes un respaldo si necesitas conservarlas.'))return;state=imported;refreshEvaluation();persist();$('notice').textContent='Copia cargada. Se respetó el diseño permanente de este HTML.';}catch(error){$('notice').textContent='No se cargó el archivo: '+error.message;}finally{event.target.value='';}});
+$('reset').addEventListener('click',()=>{const owner=state.meta.engineer||'el borrador sin colaborador';if(!confirm(`¿Reiniciar la evaluación de ${owner}? Se borrarán solo sus respuestas y datos de evaluación. Los demás colaboradores conservarán sus evaluaciones. Guarda una copia antes si necesitas conservarla.`))return;state=freshEvaluation(state);for(const role of Object.keys(PEOPLE_LIMITS)){$(`${role}-message`).textContent='';$(`${role}-new`).value='';}refreshEvaluation();persist();$('notice').textContent='Evaluación actual reiniciada. Las evaluaciones de los demás colaboradores se conservaron.';});
+$('print').addEventListener('click',()=>{buildPrint();window.print();});window.addEventListener('beforeprint',buildPrint);
+fillMeta();renderScale();renderNavigation();renderQuestions();syncSummary();
+
+</script>
+</body>
+</html>
